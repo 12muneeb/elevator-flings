@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
   },
 
   applogo: {
-    width: 300,
-    height: 200,
+    width: 150,
+    height: 150,
     resizeMode: "contain",
     marginTop: "12%"
   },
 
   underlineStyleBase: {
-    width: 42,
-    height: 48,
+    width: 73,
+    height: 50,
     borderWidth: 0,
     borderRadius: 5,
     borderColor: colors.primary,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
   textNormal: {
     ...appStyles.font14,
-    color: colors.black,
+    color: colors.white,
     ...appStyles.family_SofiaPro_Regular,
   },
   textNormalWithColor: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
 
   SubmitBtn: {
-    borderRadius: 10,
+    borderRadius: 26,
     marginTop: 0
   },
 
@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
     ...appStyles.font16,
     ...appStyles.family_SofiaPro_Regular,
   },
+  content:{
+    alignItems:'center'
+  }
 });
 
 export default styles;

@@ -25,6 +25,7 @@ export const colors = {
   gray: '#1F222A',
   darkGray: '#767373',
   lightGray: '#EFF0F6',
+  lightpurple:'#231925',
 
   // Text Colors
   txt1: '#242424',

@@ -1,15 +1,18 @@
-import React, {Component, createRef} from 'react';
-import {View, Image, BackHandler, Keyboard} from 'react-native';
+import React, { Component, createRef } from 'react';
+import { View, Image, BackHandler, Keyboard } from 'react-native';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
 import OutlineInput from '../../../components/OutlineInput';
 import NavService from '../../../helpers/NavService';
-import {appLogos} from '../../../assets/index';
-import {resetValidations} from '../../../utils/validation';
+import { appIcons, appLogos } from '../../../assets/index';
+import { resetValidations } from '../../../utils/validation';
 import styles from './styles';
-import {Formik} from 'formik';
-import {resendPassword} from '../../../redux/actions/authAction';
-import {connect} from 'react-redux';
+import { Formik } from 'formik';
+import { resendPassword } from '../../../redux/actions/authAction';
+import { connect } from 'react-redux';
+import CustomText from '../../../components/CustomText';
+import { colors, family, size } from '../../../utils';
+import CTextfield from '../../../components/CTextField';
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -37,16 +40,13 @@ class ResetPassword extends Component {
     };
   }
 
-  onSubmit = values => {
-    let payload = {
-      new_password: values?.password,
-    };
-    Keyboard.dismiss();
-    this.props.resendPassword(payload);
-  };
+
 
   render() {
-    const {} = this.state;
+    const { password, confirmPassword } = this.state;
+    const onSubmit = () => {
+      NavService.navigate('Login')
+    }
     return (
       <CustomBackground
         showLogo={false}
@@ -61,40 +61,54 @@ class ResetPassword extends Component {
               confirmPassword: '',
             }}
             validationSchema={resetValidations}>
-            {({handleChange, values, handleSubmit, errors, resetForm}) => {
+            {({ handleChange, values, handleSubmit, errors, resetForm }) => {
               return (
-                <View style={[styles.container, {marginTop: 20}]}>
+                <View style={[styles.container, { marginTop: 20 }]}>
                   <View style={styles.logoStyle}>
                     <Image style={styles.applogo} source={appLogos.appLogo} />
                   </View>
+                  <CustomText
+                    text="Create New Password"
+                    color={colors.white}
+                    size={size.h4}
+                    font={family.SofiaProBold}
+                  />
                   <View style={styles.textNormal}>
-                    <OutlineInput
-                      label="New Password"
-                      placeholder={'New Password'}
-                      leftIcon="lock"
-                      value={values?.password}
-                      onChangeText={handleChange('password')}
+                    <CTextfield
+                      ref={password}
+                      secureTextEntry={true}
+                      inputLabel='Enter New Password'
+                      placeholderTextColor={colors.white}
+                      mode={'outlined'}
+                      multiLine={false}
+                      numberOfLines={1}
+                      icon={appIcons?.lock}
+                      iconColor={colors.primary}
+                      outlineColor={colors.white}
+                      bgColor={{ color: colors.white }}
+                      activeOutlineColor={colors.primary}
+                      values={values?.password}
                       error={errors?.password}
-                      secureTextEntry
-                      rightIcon="eye"
-                      righticon="eye-off"
-                      maxLength={30}
                     />
-                    <OutlineInput
-                      label="Confirm Password"
-                      placeholder={'Confirm Password'}
-                      leftIcon="lock"
-                      value={values?.confirmPassword}
-                      onChangeText={handleChange('confirmPassword')}
-                      secureTextEntry
+                    <CTextfield
+                      ref={confirmPassword}
+                      secureTextEntry={true}
+                      inputLabel='Repeat Password'
+                      placeholderTextColor={colors.white}
+                      mode={'outlined'}
+                      multiLine={false}
+                      numberOfLines={1}
+                      icon={appIcons?.lock}
+                      iconColor={colors.primary}
+                      outlineColor={colors.white}
+                      bgColor={{ color: colors.white }}
+                      activeOutlineColor={colors.primary}
+                      values={values?.confirmPassword}
                       error={errors?.confirmPassword}
-                      rightIcon="eye"
-                      righticon="eye-off"
-                      maxLength={30}
                     />
                     <CustomButton
-                      title="Submit"
-                      onPress={() => handleSubmit()}
+                      title="Continue"
+                      onPress={onSubmit}
                       buttonStyle={styles.SubmitBtn}
                       textStyle={styles.SubmitTitle}
                     />
@@ -109,5 +123,5 @@ class ResetPassword extends Component {
   }
 }
 
-const actions = {resendPassword};
+const actions = { resendPassword };
 export default connect(null, actions)(ResetPassword);

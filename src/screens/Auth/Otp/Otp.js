@@ -20,6 +20,8 @@ import {
 import { getDeviceToken } from '../../../redux/actions/appAction';
 import styles from './styles';
 import NavService from '../../../helpers/NavService';
+import CustomText from '../../../components/CustomText';
+import { colors, family, size } from '../../../utils';
 const Otp = ({ navigation, route }) => {
   const { screenName, user_id } = route.params;
   console.log('screenName', screenName, 'user_id', user_id);
@@ -30,39 +32,7 @@ const Otp = ({ navigation, route }) => {
   const [timerCode, setTimerCode] = useState(30);
   const [resend, setResend] = useState(false);
 
-  const onSubmit = async () => {
-    if (code?.length > 0) {
-      if (screenName == 'signup') {
-        const fcmToken = await getDeviceToken();
-        let payload = {
-          user_id: user_id,
-          verified_code: code,
-          type: 'account_verify',
-          device_type: Platform.OS,
-          device_token: fcmToken,
-        };
-        console.log('payload===', payload);
-        dispatch(otpVerify(payload, 'signup'));
-      } else if (screenName == 'forgot') {
-        const fcmToken = await getDeviceToken();
-        let payload = {
-          user_id: user_id,
-          verified_code: code,
-          type: 'account_verify',
-          device_type: Platform.OS,
-          device_token: fcmToken,
-        };
-        console.log('payload===', payload);
-        dispatch(otpVerify(payload, 'forgot'));
-      }
-    } else {
-      Toast.show({
-        text1: `OTP field can't be empty`,
-        type: 'error',
-        visibilityTime: 3000,
-      });
-    }
-  };
+
   const startInterval = () => {
     clearInterval(timer);
     timer = setInterval(() => {
@@ -103,7 +73,6 @@ const Otp = ({ navigation, route }) => {
     };
   }, []);
 
-  //BACK HANDLER
   function handleBackButtonClick() {
     navigation.navigate('Login');
     return true;
@@ -118,21 +87,36 @@ const Otp = ({ navigation, route }) => {
       );
     };
   }, []);
-
+  const onSubmit = () => {
+    NavService.navigate('CompleteProfile')
+  }
   return (
     <CustomBackground
       showLogo={false}
-      titleText={'OTP Verification'}
       onBack={() => NavService.navigate('Login')}>
       <View style={styles.container}>
         <View style={[styles.container, { marginTop: 20 }]}>
           <View style={styles.logoStyle}>
             <Image style={styles.applogo} source={appLogos.appLogo} />
           </View>
+          <View style={styles.content}>
+            <CustomText
+              text="One Time Password"
+              color={colors.white}
+              size={size.h4}
+              font={family.SofiaProBold}
+            />
+            <CustomText
+              text="Enter Your OTP"
+              color={colors.white}
+              size={size.small}
+              font={family.SofiaProRegular}
+            />
+          </View>
           <OTPInputView
             keyboardType="numeric"
             style={styles.otpInput}
-            pinCount={6}
+            pinCount={4}
             autoFocusOnLoad={false}
             codeInputFieldStyle={styles.underlineStyleBase}
             codeInputHighlightStyle={styles.underlineStyleHighLighted}
@@ -148,7 +132,7 @@ const Otp = ({ navigation, route }) => {
           />
 
           <CustomButton
-            title="Submit"
+            title="Continue"
             onPress={onSubmit}
             buttonStyle={styles.SubmitBtn}
             textStyle={styles.SubmitTitle}

@@ -41,25 +41,26 @@ const styles = StyleSheet.create({
   },
 
   profileImgView: {
-    backgroundColor: colors.black,
-    borderColor: colors.secondary,
-    borderWidth: 2,
+    backgroundColor: '#313131',
+    borderColor: colors.white,
+    borderWidth: 1,
   },
 
   profileImg: {
     width: 80,
     height: 60,
-    resizeMode: "contain"
+    resizeMode: "contain",
+    tintColor:colors.darkGray
   },
 
   uploadIconCont: {
     position: "absolute",
     width: 30,
     height: 30,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 100,
+    borderRadius: 80,
     borderColor: colors.white,
     borderWidth: 1,
     right: 10,
@@ -76,10 +77,11 @@ const styles = StyleSheet.create({
     ...appStyles.alignCenter,
     ...appStyles.justifyCenter,
     height: '100%',
+    backgroundColor:'red'
   },
 
   signUpBtn: {
-    borderRadius: 10,
+    borderRadius: 26,
     marginTop: 15,
     marginBottom:16
   },

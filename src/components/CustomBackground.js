@@ -74,9 +74,9 @@ const styles = StyleSheet.create({
   headerSignInText: {
     ...appStyles.font16,
     ...appStyles.family_SofiaPro_Regular,
-    color: colors.black,
+    color: colors.white,
     textAlign: "center",
-    top:getStatusBarHeight() + 11
+    top:getStatusBarHeight() + 10
 
   },
   headerContainer: { paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "center" },

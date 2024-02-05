@@ -63,7 +63,17 @@ const styles = StyleSheet.create({
   },
   textStyle:{
     textDecorationLine:'underline',
-  }
+  },
+  content:{alignItems: 'center'},
+  subcontent:{
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  forgot:{
+    marginVertical:10,
+    alignSelf:'center'
+  },
+  postion:{marginTop:10}
 });
 
 export default styles;

@@ -1,27 +1,21 @@
-import React, {Component, createRef} from 'react';
+import { Formik } from 'formik';
+import React, { Component, createRef } from 'react';
 import {
   Image,
-  Text,
-  View,
-  Pressable,
-  Platform,
-  Keyboard,
   TouchableOpacity,
+  View
 } from 'react-native';
-import {connect} from 'react-redux';
-import {Formik} from 'formik';
+import { connect } from 'react-redux';
+import { appIcons, appLogos } from '../../../assets/index';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import OutlineInput from '../../../components/OutlineInput';
-import NavService from '../../../helpers/NavService';
-import {getDeviceToken} from '../../../redux/actions/appAction';
-import {loginValidations} from '../../../utils/validation';
-import {appLogos} from '../../../assets/index';
-import {loginCurrentUser} from '../../../redux/actions/authAction';
-import styles from './styles';
 import CustomText from '../../../components/CustomText';
-import {colors, family, size} from '../../../utils';
-import CustomTextField from '../../../components/CustomTextField';
+import { loginCurrentUser } from '../../../redux/actions/authAction';
+import { colors, family, size } from '../../../utils';
+import { loginValidations } from '../../../utils/validation';
+import styles from './styles';
+import NavService from '../../../helpers/NavService';
+import CTextfield from '../../../components/CTextField';
 
 class Login extends Component {
   constructor(props) {
@@ -32,22 +26,19 @@ class Login extends Component {
     this.loginForm = createRef(null);
   }
 
-  onSubmit = async values => {
-    let payload = {...values};
-    const fcmToken = await getDeviceToken();
-    payload['device_type'] = Platform.OS;
-    payload['device_token'] = fcmToken;
-    payload['user_type'] = 'business';
-    Keyboard.dismiss();
-    this.props.loginCurrentUser(payload);
-  };
+
 
   render() {
-    const {verificationPopUp} = this.state;
+    const { email, password } = this.state;
+    const OnCreate = () => {
+      NavService.navigate('Signup');
+    }
+    const onForget = () => {
+      NavService.navigate('ForgotPassword')
+    }
     return (
       <CustomBackground
         showLogo={false}
-        titleText={'Login'}
         onBack={() => this.props.navigation.goBack()}>
         <View style={styles.container}>
           <Formik
@@ -58,13 +49,13 @@ class Login extends Component {
               password: '',
             }}
             validationSchema={loginValidations}>
-            {({handleChange, values, handleSubmit, errors, resetForm}) => {
+            {({ handleChange, values, handleSubmit, errors, resetForm }) => {
               return (
-                <View style={[styles.container, {marginTop: 20}]}>
+                <View style={[styles.container, { marginTop: 20 }]}>
                   <View style={styles.logoStyle}>
                     <Image style={styles.applogo} source={appLogos.appLogo} />
                   </View>
-                  <View style={{alignItems: 'center'}}>
+                  <View style={styles.content}>
                     <CustomText
                       text="Welcome back!"
                       color={colors.white}
@@ -72,57 +63,74 @@ class Login extends Component {
                       font={family.SofiaProBold}
                     />
                     <View
-                      style={{
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                      }}>
+                      style={styles.subcontent}>
                       <CustomText
                         text="Login below or"
                         color={colors.white}
                         size={size.small}
                         font={family.SofiaProRegular}
                       />
-                      <TouchableOpacity activeOpacity={0.8}>
+                      <TouchableOpacity activeOpacity={0.8} onPress={OnCreate}>
+                        <CustomText
+                          text=" Create an Account"
+                          color={colors.primary}
+                          size={size.small}
+                          font={family.SofiaProBold}
+                          style={styles.textStyle}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <View style={styles.postion}>
+                    <CTextfield
+                      ref={email}
+                      secureTextEntry={false}
+                      inputLabel='Email'
+                      placeholder='email@example.com'
+                      placeholderTextColor={colors.white}
+                      mode={'outlined'}
+                      multiLine={false}
+                      numberOfLines={1}
+                      icon={appIcons?.email}
+                      iconColor={colors.primary}
+                      outlineColor={colors.white}
+                      bgColor={{ color: colors.white }}
+                      activeOutlineColor={colors.primary}
+                      values={values?.email}
+                      error={errors?.email}
+                    />
+                    <CTextfield
+                      ref={password}
+                      secureTextEntry={true}
+                      inputLabel='Passoword'
+                      placeholderTextColor={colors.white}
+                      mode={'outlined'}
+                      multiLine={false}
+                      numberOfLines={1}
+                      icon={appIcons?.lock}
+                      iconColor={colors.primary}
+                      outlineColor={colors.white}
+                      bgColor={{ color: colors.white }}
+                      activeOutlineColor={colors.primary}
+                      values={values?.password}
+                      error={errors?.password}
+                    />
+                    <TouchableOpacity activeOpacity={0.8} onPress={onForget} style={styles.forgot}>
                       <CustomText
-                        text=" Create an Account"
-                        color={colors.primary}
+                        text="Forgot Password?"
+                        color={colors.white}
                         size={size.small}
                         font={family.SofiaProBold}
                         style={styles.textStyle}
                       />
-                      </TouchableOpacity>
-                    </View>
+                    </TouchableOpacity>
+                    <CustomButton
+                      title="Sign in"
+                      onPress={() => handleSubmit()}
+                      buttonStyle={styles.loginBtn}
+                      textStyle={styles.loginTitle}
+                    />
                   </View>
-                 
-                  <OutlineInput
-                    label="Email"
-                    placeholder={'Email'}
-                    leftIcon="email"
-                    value={values?.email}
-                    onChangeText={handleChange('email')}
-                    error={errors?.email}
-                    keyboardType={'email-address'}
-                    q
-                    maxLength={35}
-                  /> 
-                  <OutlineInput
-                    label="Password"
-                    placeholder={'Password'}
-                    leftIcon="lock"
-                    value={values?.password}
-                    onChangeText={handleChange('password')}
-                    error={errors?.password}
-                    secureTextEntry
-                    rightIcon="eye"
-                    righticon="eye-off"
-                    maxLength={30}
-                  />
-                  <CustomButton
-                    title="Login"
-                    onPress={() => handleSubmit()}
-                    buttonStyle={styles.loginBtn}
-                    textStyle={styles.loginTitle}
-                  />
                 </View>
               );
             }}
@@ -132,5 +140,5 @@ class Login extends Component {
     );
   }
 }
-const actions = {loginCurrentUser};
+const actions = { loginCurrentUser };
 export default connect(null, actions)(Login);

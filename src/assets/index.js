@@ -38,6 +38,9 @@ export const appImages = {
   editEvent2: require("../assets/image/editEvent2.png"),
   editEvent3: require("../assets/image/editEvent3.png"),
   editEvent4: require("../assets/image/editEvent4.png"),
+  google:require("../assets/image/google.png"),
+  facebook:require("../assets/image/facebook.png"),
+  apple:require('../assets/image/apple.png')
 };
 
 export const appIcons = {

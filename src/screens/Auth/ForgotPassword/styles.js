@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
   },
   
   applogo:{
-    width:300,
-    height:200,
+   width:150,
+   height:150,
     resizeMode:"contain",
     marginTop:"12%"
   },
 
   SubmitBtn: {
-    borderRadius: 10,
+    borderRadius: 26,
     marginTop: 15
   },
 
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   space: {
     paddingVertical: 20
   },
+  content:{alignItems: 'center'},
 });
 
 export default styles;

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors} from '../../../utils';
+import { colors } from '../../../utils';
 import appStyles from '../../appStyles';
 
 const styles = StyleSheet.create({
@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    paddingTop:10
+    paddingTop: 10
   },
   heading: {
     fontSize: 22,
@@ -80,15 +80,49 @@ const styles = StyleSheet.create({
   },
 
   signUpBtn: {
-    borderRadius: 10,
+    borderRadius: 26,
     marginTop: 15,
-    marginBottom:16
+    marginBottom: 16
   },
 
   signUpTitle: {
     ...appStyles.font16,
     ...appStyles.family_SofiaPro_Regular,
   },
+  appLogo: {
+    width: 150,
+    height: 150,
+    resizeMode: "contain",
+    marginTop: "12%"
+  },
+  content: { alignItems: 'center' },
+  subcontent: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical:10
+  },
+  textStyle: {
+    textDecorationLine: 'underline',
+  },
+  img: {
+    width: 25, height: 25,
+  },
+  imgtouchable: {
+    borderWidth: 4,
+    padding: 10,
+    borderRadius: 25,
+    borderColor: '#36393F'
+
+  },
+  bottomcontainer: { alignItems: 'center',marginTop:10 },
+  imagecontainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 200,
+    justifyContent: 'space-around',
+    marginTop: 15
+
+  }
 });
 
 export default styles;

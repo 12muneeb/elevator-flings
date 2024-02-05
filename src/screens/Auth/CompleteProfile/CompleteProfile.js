@@ -44,36 +44,7 @@ class CompleteProfile extends Component {
       this.setState({verificationPopUp: true});
     }
   }
-  onSubmit = values => {
-    const {bussinessProfileImage, phoneNumber} = this.state;
-    let payload = new FormData();
-    if (values?.fullName !== '') {
-      payload.append('full_name', values?.fullName);
-    }
-    if (values?.bussinessName !== '') {
-      payload.append('business_name', values?.bussinessName);
-    }
-    if (values?.einNo !== '') {
-      payload.append('ein_number', values?.einNo);
-    }
-    if (values?.phoneNumber !== '') {
-      payload.append('phone_number', values?.phoneNumber);
-    }
-    if (bussinessProfileImage !== '') {
-      payload.append('profile_image', {
-        uri: bussinessProfileImage?.path,
-        name: `Profile${Date.now()}.${bussinessProfileImage?.mime.slice(
-          bussinessProfileImage?.mime.lastIndexOf('/') + 1,
-        )}`,
-        type: bussinessProfileImage?.mime,
-      });
-    }
-    // NavService.navigate('Otp',{
-    //   screenName: 'signup',
-    // })
-    Keyboard.dismiss();
-    this.props.completeProfile(payload);
-  };
+
 
   render() {
     const {bussinessProfileImage, phoneNumber, verificationPopUp} = this.state;
@@ -84,7 +55,7 @@ class CompleteProfile extends Component {
     return (
       <CustomBackground
         showLogo={false}
-        titleText={'Complete Profile'}
+        titleText={'Set Profile'}
         onBack={() => NavService.goBack()}>
         <View style={styles.container}>
           <Formik
@@ -110,7 +81,7 @@ class CompleteProfile extends Component {
               console.log('errors', values);
               return (
                 <>
-                  <View style={[styles.container, {marginTop: 20}]}>
+                  <View style={[styles.container, {marginTop: 50}]}>
                     <ImagePicker
                       onImageChange={(path, mime, type) => {
                         updateImageInGallery(path, mime, type);
@@ -125,7 +96,7 @@ class CompleteProfile extends Component {
                         innerAsset
                         imageUri={
                           bussinessProfileImage == null
-                            ? appImages.profileImage
+                            ? appIcons.user
                             : {uri: bussinessProfileImage.path}
                         }
                         viewStyle={styles.profileImgView}
@@ -138,8 +109,10 @@ class CompleteProfile extends Component {
                       <View style={styles.uploadIconCont}>
                         <Img
                           local
-                          src={appIcons.upload}
+                          src={appIcons.plus}
                           style={styles.uploadIcon}
+                          tintColor={colors.white}
+                          resizeMode={'contain'}
                         />
                       </View>
                       <CustomText
@@ -158,59 +131,9 @@ class CompleteProfile extends Component {
                         }}
                       />
                     </ImagePicker>
-                    <View>
-                      <OutlineInput
-                        label="Full Name"
-                        placeholder={'Full Name'}
-                        leftIcon="account"
-                        value={values?.fullName}
-                        onChangeText={handleChange('fullName')}
-                        error={errors?.fullName}
-                        maxLength={30}
-                      />
-                      <CustomTextInput
-                        leftIcon={appIcons.bussinessName}
-                        placeholder={'Bussniness Name'}
-                        value={values?.bussinessName}
-                        onChangeText={handleChange('bussinessName')}
-                        label={'Bussniness Name'}
-                        error={errors?.bussinessName}
-                        maxLength={30}
-                      />
-                      <OutlineInput
-                        label="Ein No"
-                        placeholder={'Ein No'}
-                        leftIcon="card-account-details-outline"
-                        value={values?.einNo}
-                        onChangeText={handleChange('einNo')}
-                        error={errors?.einNo}
-                        maxLength={9}
-                        keyboardType="numeric"
-                      />
-                      <CustomPhoneInput
-                        placeholder={'Phone Number'}
-                        label={'Phone Number'}
-                        error={errors?.phoneNumber}
-                        placeholderTextColor={colors.black}
-                        formattedPhoneNumber={this.state.formattedPhoneNumber} // Pass the prop from component's state
-                        phoneNumber={phoneNumber}
-                        onChangePhoneInput={(
-                          phoneNumberFormat,
-                          phoneNumber,
-                        ) => {
-                          this.setState({
-                            formattedPhoneNumber: phoneNumberFormat,
-                            phoneNumber: phoneNumber,
-                          });
-                          setFieldValue('phoneNumber', phoneNumberFormat);
-                        }}
-                        value={values?.phoneNumber}
-                        // verticalLine
-                        leftIcon={appIcons.phone}
-                      />
-                    </View>
+                
                     <CustomButton
-                      title="Submit"
+                      title="Continue"
                       onPress={() => handleSubmit()}
                       buttonStyle={styles.signUpBtn}
                       textStyle={styles.signUpTitle}
