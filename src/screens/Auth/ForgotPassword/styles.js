@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   textNormal: {
     // marginVertical: 10
+    marginTop:20
   },
   
   applogo:{

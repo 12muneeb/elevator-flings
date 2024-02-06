@@ -1,27 +1,26 @@
-import React, { Component, createRef } from 'react';
-import { View, Image, BackHandler, Keyboard } from 'react-native';
+import React, { Component } from 'react';
+import { BackHandler, Image, View } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { connect } from 'react-redux';
+import { appIcons, appLogos } from '../../../assets/index';
+import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import OutlineInput from '../../../components/OutlineInput';
-import NavService from '../../../helpers/NavService';
-import { appIcons, appLogos } from '../../../assets/index';
-import { resetValidations } from '../../../utils/validation';
-import styles from './styles';
-import { Formik } from 'formik';
-import { resendPassword } from '../../../redux/actions/authAction';
-import { connect } from 'react-redux';
 import CustomText from '../../../components/CustomText';
+import NavService from '../../../helpers/NavService';
+import { resendPassword } from '../../../redux/actions/authAction';
 import { colors, family, size } from '../../../utils';
-import CTextfield from '../../../components/CTextField';
+import styles from './styles';
 
 class ResetPassword extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.resetForm = createRef(null);
+    this.state = {
+      password: '',
+      confirmPassword: ''
+    };
   }
 
-  //BACK HANDLER
   handleBackButtonClick = () => {
     this?.props?.navigation.navigate('Login');
     return true;
@@ -45,24 +44,37 @@ class ResetPassword extends Component {
   render() {
     const { password, confirmPassword } = this.state;
     const onSubmit = () => {
-      NavService.navigate('Login')
-    }
+      if (!password) {
+        Toast.show({
+          text1: 'Password field can\'t be empty.',
+          type: 'error',
+          visibilityTime: 3000
+        });
+      } else if (!confirmPassword) {
+        Toast.show({
+          text1: 'Confirm Password field can\'t be empty.',
+          type: 'error',
+          visibilityTime: 3000
+        });
+      } 
+      else if (password !== confirmPassword) {
+        Toast.show({
+          text1: 'Passwords do not match.',
+          type: 'error',
+          visibilityTime: 3000
+        });
+      } else {
+        NavService.navigate('Login');
+      }
+    };
+
     return (
       <CustomBackground
         showLogo={false}
         titleText={'Reset Password'}
         onBack={() => NavService.navigate('Login')}>
         <View style={styles.container}>
-          <Formik
-            innerRef={this.resetForm}
-            onSubmit={values => this.onSubmit(values)}
-            initialValues={{
-              password: '',
-              confirmPassword: '',
-            }}
-            validationSchema={resetValidations}>
-            {({ handleChange, values, handleSubmit, errors, resetForm }) => {
-              return (
+      
                 <View style={[styles.container, { marginTop: 20 }]}>
                   <View style={styles.logoStyle}>
                     <Image style={styles.applogo} source={appLogos.appLogo} />
@@ -75,7 +87,6 @@ class ResetPassword extends Component {
                   />
                   <View style={styles.textNormal}>
                     <CTextfield
-                      ref={password}
                       secureTextEntry={true}
                       inputLabel='Enter New Password'
                       placeholderTextColor={colors.white}
@@ -87,11 +98,10 @@ class ResetPassword extends Component {
                       outlineColor={colors.white}
                       bgColor={{ color: colors.white }}
                       activeOutlineColor={colors.primary}
-                      values={values?.password}
-                      error={errors?.password}
+                      values={password}
+                      onChangeText={(text) => this.setState({ password: text })}
                     />
                     <CTextfield
-                      ref={confirmPassword}
                       secureTextEntry={true}
                       inputLabel='Repeat Password'
                       placeholderTextColor={colors.white}
@@ -103,8 +113,8 @@ class ResetPassword extends Component {
                       outlineColor={colors.white}
                       bgColor={{ color: colors.white }}
                       activeOutlineColor={colors.primary}
-                      values={values?.confirmPassword}
-                      error={errors?.confirmPassword}
+                      values={confirmPassword}
+                      onChangeText={(text) => this.setState({ confirmPassword: text })}
                     />
                     <CustomButton
                       title="Continue"
@@ -114,9 +124,7 @@ class ResetPassword extends Component {
                     />
                   </View>
                 </View>
-              );
-            }}
-          </Formik>
+             
         </View>
       </CustomBackground>
     );

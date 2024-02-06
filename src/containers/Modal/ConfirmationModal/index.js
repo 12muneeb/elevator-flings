@@ -11,7 +11,6 @@ import appStyles from '../../../screens/appStyles';
 import NavService from '../../../helpers/NavService';
 import CustomTextInput from '../../../components/CustomTextInput';
 import {Formik} from 'formik';
-import OutlineInput from '../../../components/OutlineInput';
 import {logoutValidations} from '../../../utils/validation';
 import {connect} from 'react-redux';
 import {logoutCurrentUser} from '../../../redux/actions/authAction';

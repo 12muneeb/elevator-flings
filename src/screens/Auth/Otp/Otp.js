@@ -31,8 +31,17 @@ const Otp = ({ navigation, route }) => {
   const [code, setCode] = useState();
   const [timerCode, setTimerCode] = useState(30);
   const [resend, setResend] = useState(false);
-
-
+  const onSubmit = () => {
+    if(!code || code.length === 0) {
+      Toast.show({
+        text1: 'Please enter OTP',
+        type: 'error',
+        visibilityTime: 3000,
+      });
+    }else{
+      NavService.navigate('CompleteProfile');
+    }
+  }
   const startInterval = () => {
     clearInterval(timer);
     timer = setInterval(() => {
@@ -87,9 +96,7 @@ const Otp = ({ navigation, route }) => {
       );
     };
   }, []);
-  const onSubmit = () => {
-    NavService.navigate('CompleteProfile')
-  }
+
   return (
     <CustomBackground
       showLogo={false}
@@ -150,6 +157,6 @@ const Otp = ({ navigation, route }) => {
       </View>
     </CustomBackground>
   );
-};
+          }
 
-export default Otp;
+export default Otp

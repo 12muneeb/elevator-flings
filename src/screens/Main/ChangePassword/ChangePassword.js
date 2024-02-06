@@ -5,7 +5,6 @@ import {
 import Toast from 'react-native-toast-message';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import OutlineInput from '../../../components/OutlineInput';
 import NavService from '../../../helpers/NavService';
 import styles from './styles';
 import { schema } from '../../../utils/validation';

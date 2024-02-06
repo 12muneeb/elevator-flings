@@ -13,19 +13,20 @@ import NavService from '../helpers/NavService';
 import Logo from './Logo';
 import { colors } from '../utils';
 import appStyles from '../screens/appStyles';
+import CustomText from './CustomText';
 
-export default ({ children, showLogo = true, back = true, title = true, titleText, onBack = null }) => {
+export default ({ children, showLogo = true, back = true, title = true, titleText, onBack = null, skip, onSkip }) => {
   return (
-    <ImageBackground source={appImages.backgroundImage} style={{ flex: 1,backgroundColor:colors.white }}>
+    <ImageBackground source={appImages.backgroundImage} style={{ flex: 1, backgroundColor: colors.white }}>
       <ScrollView
         keyboardShouldPersistTaps="handled"
         bounces={false}
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, backgroundColor:colors.background}}
+        style={{ flex: 1, backgroundColor: colors.background }}
         contentContainerStyle={{
           alignItems: 'center',
           flexGrow: 1,
-          paddingBottom:"10%",
+          paddingBottom: "10%",
           // paddingTop: showLogo ? 0 : getStatusBarHeight(),
         }}>
         {back && (
@@ -49,6 +50,18 @@ export default ({ children, showLogo = true, back = true, title = true, titleTex
             />
           </TouchableOpacity>
         )}
+        {skip && (
+          <TouchableOpacity
+            onPress={onSkip}
+            style={{
+              position: 'absolute',
+              zIndex: 99,
+              top: getStatusBarHeight() + 10,
+              right: 20,
+            }}>
+            <CustomText text='Skip' color={colors.white} />
+          </TouchableOpacity>
+        )}
         {title && (
           <View>
             <Text style={styles.headerSignInText}>{titleText}</Text>
@@ -64,7 +77,7 @@ export default ({ children, showLogo = true, back = true, title = true, titleTex
             <Logo size={220} />
           </View>
         )}
-        <View style={{ flex: 3 }}>{children}</View>
+        <View style={{ flex:1,width:'100%',alignSelf:'center' }}>{children}</View>
       </ScrollView>
     </ImageBackground>
   );
@@ -76,7 +89,7 @@ const styles = StyleSheet.create({
     ...appStyles.family_SofiaPro_Regular,
     color: colors.white,
     textAlign: "center",
-    top:getStatusBarHeight() + 10
+    top: getStatusBarHeight() + 10
 
   },
   headerContainer: { paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "center" },

@@ -36,8 +36,9 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 1,
     ...appStyles.font14,
-    color: colors.black,
+    color: colors.white,
     ...appStyles.family_SofiaPro_Regular,
+    marginTop:20
   },
 
   textNormal: {
@@ -60,11 +61,11 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   otpInput: {
-    width: '87%',
+    width: '85%',
     height: 20,
     alignSelf: 'center',
     marginVertical: 40,
-    marginLeft: 15
+    marginLeft: 15,
   },
   timerText: {
     alignSelf: 'center',
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
 
   SubmitBtn: {
     borderRadius: 26,
-    marginTop: 0
+    marginTop: 15
   },
 
   SubmitTitle: {

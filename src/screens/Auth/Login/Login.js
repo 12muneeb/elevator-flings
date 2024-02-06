@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Alert, Image, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
 import { appIcons, appLogos } from '../../../assets/index';
+import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
 import CustomText from '../../../components/CustomText';
-import { colors, family, size } from '../../../utils';
-import styles from './styles';
 import NavService from '../../../helpers/NavService';
-import CTextfield from '../../../components/CTextField';
-import Toast from 'react-native-toast-message';
-
+import { colors, family, size } from '../../../utils';
+import * as EmailValidator from 'email-validator'
+import styles from './styles';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -21,37 +21,36 @@ class Login extends Component {
     };
   }
 
- 
+
   render() {
-    const { email, password } = this.state;
+    const { email, password, } = this.state;
     const OnCreate = () => {
       NavService.navigate('Signup');
     };
-   const onSubmit = () => {
-      const { email, password } = this.state;
-    
+    const onSubmit = () => {
+
       if (!email) {
         Toast.show({
           text1: 'Email address field can`t be empty.',
           type: 'error',
           visibilityTime: 3000,
         });
-      } 
+      }
       else if (!EmailValidator.validate(email)) {
         Toast.show({
           text1: 'Please enter a valid email address.',
           type: 'error',
           visibilityTime: 3000,
         });
-      }else if(!password){
+      } else if (!password) {
         Toast.show({
           text1: 'Password field can`t be empty.',
           type: 'error',
           visibilityTime: 3000,
         });
       }
-      else{
-Alert.alert('ss')
+      else {
+       NavService.navigate('Home')
       }
     }
     const onForget = () => {
@@ -106,6 +105,7 @@ Alert.alert('ss')
                 outlineColor={colors.white}
                 bgColor={{ color: colors.white }}
                 activeOutlineColor={colors.primary}
+                keyboardType={'email-address'}
                 values={email}
                 onChangeText={(text) => this.setState({ email: text })}
               />

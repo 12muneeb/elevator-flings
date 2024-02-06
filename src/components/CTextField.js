@@ -26,7 +26,9 @@ const CTextfield = props => {
     outlineColor,
     bgColor,
     toggleSecure,
-    activeOutlineColor
+    keyboardType,
+    activeOutlineColor,
+    onChangeText
   } = props;
 
   const renderErrorView = () => {
@@ -44,6 +46,9 @@ const CTextfield = props => {
           mode={mode}
           multiline={multiLine}
           numberOfLines={numberOfLines}
+          keyboardType={keyboardType}
+          onChangeText={onChangeText}
+          
           left={
             icon && (
               <TextInput.Icon
@@ -56,14 +61,14 @@ const CTextfield = props => {
           }
           theme={{
             colors: {
-              onSurfaceVariant: colors?.white,
+              onSurfaceVariant: bgColor ? bgColor : colors.white,
               placeholder: '#fff',
             },
           }}
           activeOutlineColor={activeOutlineColor}
           outlineColor={outlineColor}
           outlineStyle={{ borderRadius: 10 }}
-          style={[styles.inputField, bgColor]}
+          style={[styles.inputField,bgColor ]}
           textColor={colors?.white}
           secureTextEntry={secureTextEntry}
           onFocus={() => {
@@ -85,18 +90,11 @@ const CTextfield = props => {
     );
   };
 
-  const renderSelectionView = () => {
-    return (
-      <TouchableOpacity style={[{ justifyContent: 'center' }]} onPress={onPress}>
-        <CustomText text={value ? value : placeholder} color={colors.white} />
-      </TouchableOpacity>
-    );
-  };
+
 
   return (
     <View style={{ ...inputContainerStyle }}>
       {type === 'view' ? renderSelectionView() : renderInputView()}
-      {error ? renderErrorView() : null} 
     </View>
   );
 };
@@ -115,9 +113,9 @@ const styles = StyleSheet.create({
     marginTop: responsiveScreenHeight(1.4),
   },
   inputField: {
-    backgroundColor: colors.lightpurple,
     marginTop: 5,
     height: responsiveScreenHeight(6),
     color: colors.white,
+    backgroundColor:colors.lightpurple
   },
 });

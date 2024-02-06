@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   textNormal: {
-    marginVertical: 20,
-  },
+    marginVertical: 30,
+},
 
   applogo: {
     width: 150,

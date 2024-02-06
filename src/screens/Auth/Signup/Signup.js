@@ -9,7 +9,6 @@ import CustomTextInput, {
 } from '../../../components/CustomTextInput';
 import { appIcons, appImages, appLogos } from '../../../assets/index';
 import ProfileImage from '../../../components/ProfileImage';
-import OutlineInput from '../../../components/OutlineInput';
 import ImagePicker from '../../../components/ImagePicker';
 import Img from '../../../components/Img';
 import CustomText from '../../../components/CustomText';
@@ -21,6 +20,8 @@ import appStyles from '../../appStyles';
 import ConfirmationModal from '../../../containers/Modal/ConfirmationModal';
 import styles from './styles';
 import CTextfield from '../../../components/CTextField';
+import * as EmailValidator from 'email-validator';
+import Toast from 'react-native-toast-message';
 
 class Signup extends Component {
   constructor(props) {
@@ -35,42 +36,49 @@ class Signup extends Component {
 
   render() {
     const { email, password, confirmPassword } = this.state;
-
+    const onSubmit = () => {
+      if (!email) {
+        Toast.show({
+          text1: 'Email address field can`t be empty.',
+          type: 'error',
+          visibilityTime: 3000,
+        });
+      }
+      else if (!EmailValidator.validate(email)) {
+        Toast.show({
+          text1: 'Please enter a valid email address.',
+          type: 'error',
+          visibilityTime: 3000,
+        });
+      } else if (!password) {
+        Toast.show({
+          text1: 'Password field can`t be empty.',
+          type: 'error',
+          visibilityTime: 3000,
+        });
+      }
+      else if (password !== confirmPassword) {
+        Toast.show({
+          text1: 'Passwords do not match.',
+          type: 'error',
+          visibilityTime: 3000
+        });
+      }
+      else {
+        NavService.navigate('Otp')
+      }
+    }
 
     const OnCreate = () => {
       NavService.navigate('Login');
     }
-    const onSubmit = () => {
-     NavService.navigate('Otp')
-    }
+  
     return (
       <CustomBackground
         showLogo={false}
         onBack={() => NavService.goBack()}>
         <View style={styles.container}>
-          <Formik
-            innerRef={this.signupForm}
-            onSubmit={values => console.log('values', values)}
-
-            onReset={() => console.log('resetForm')}
-            initialValues={{
-              fullName: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-            }}
-            validationSchema={signupValidations}>
-            {({
-              handleChange,
-              values,
-              handleSubmit,
-              setFieldValue,
-              errors,
-              resetForm,
-            }) => {
-              console.log('errors', values);
-              return (
-                <>
+        
                   <View style={[styles.container, { marginTop: 20 }]}>
 
                     <View style={styles.logoStyle}>
@@ -105,7 +113,6 @@ class Signup extends Component {
                     <View>
 
                       <CTextfield
-                        ref={email}
                         secureTextEntry={false}
                         inputLabel='Email'
                         placeholder='email@example.com'
@@ -119,11 +126,11 @@ class Signup extends Component {
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         toggleSecure
-                        values={values}
-                        error={errors?.password}
+                        values={email}
+                        onChangeText={(text) => this.setState({ email: text })}
+                        keyboardType={'email-address'}
                       />
                       <CTextfield
-                        ref={password}
                         secureTextEntry={true}
                         inputLabel='Passoword'
                         placeholderTextColor={colors.white}
@@ -136,11 +143,10 @@ class Signup extends Component {
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         toggleSecure
-                        values={values}
-                        error={errors?.password}
+                        values={password}
+                        onChangeText={(text) => this.setState({ password: text })}
                       />
                       <CTextfield
-                        ref={confirmPassword}
                         secureTextEntry={true}
                         inputLabel='Repeat Password'
                         placeholderTextColor={colors.white}
@@ -153,8 +159,8 @@ class Signup extends Component {
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         toggleSecure
-                        values={values}
-                        error={errors?.confirmPassword}
+                        values={confirmPassword}
+                        onChangeText={(text) => this.setState({ confirmPassword: text })}
 
                       />
                       <CustomButton
@@ -186,10 +192,7 @@ class Signup extends Component {
                     </View>
                   </View>
 
-                </>
-              );
-            }}
-          </Formik>
+             
         </View>
       </CustomBackground>
     );

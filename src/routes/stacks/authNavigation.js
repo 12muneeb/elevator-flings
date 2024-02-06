@@ -12,6 +12,8 @@ import ForgotPassword from '../../screens/Auth/ForgotPassword';
 import ResetPassword from '../../screens/Auth/ResetPassword/ResetPassword';
 import PreLogin from '../../screens/AppStarter/PreLogin';
 import CompleteProfile from '../../screens/Auth/CompleteProfile';
+import Description from '../../screens/Auth/Description/Description';
+import Descriptions from '../../screens/Auth/Descriptions';
 
 const RootStack = createNativeStackNavigator();
 
@@ -75,6 +77,20 @@ const AuthNavigation = ({initialRoute}) => {
         }}
         name="CompleteProfile"
         component={CompleteProfile}
+      />
+       <RootStack.Screen
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+        name="Description"
+        component={Description}
+      />
+       <RootStack.Screen
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+        name="Descriptions"
+        component={Descriptions}
       />
     </RootStack.Navigator>
   );

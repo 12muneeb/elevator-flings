@@ -6,14 +6,14 @@ import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
 import { appIcons, appLogos } from '../../../assets';
 import { forgotPassword } from '../../../redux/actions/authAction';
-import OutlineInput from '../../../components/OutlineInput';
 import { forgetValidation } from '../../../utils/validation';
 import styles from './styles';
 import NavService from '../../../helpers/NavService';
 import CTextfield from '../../../components/CTextField';
 import { colors, family, size } from '../../../utils';
 import CustomText from '../../../components/CustomText';
-
+import Toast from 'react-native-toast-message';
+import * as EmailValidator from 'email-validator';
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);
@@ -25,23 +25,32 @@ class ForgotPassword extends Component {
 
   render() {
     const { email } = this.state;
-    onSubmit = values => {
-      NavService.navigate('Otp')
+    onSubmit = () => {
+         if(!email){
+            Toast.show({
+              text1: 'Please enter your email address',
+              type: 'error',
+              visibilityTime: 3000,
+            })
+         } else if (!EmailValidator.validate(email)) {
+          Toast.show({
+            text1: 'Please enter a valid email address.',
+            type: 'error',
+            visibilityTime: 3000,
+          });
+        }
+         
+         else{
+          NavService.navigate('Otp')
+         }
     };
     return (
       <CustomBackground
         showLogo={false}
         onBack={() => this.props.navigation.goBack()}>
         <View style={styles.container}>
-          <Formik
-            innerRef={this.forgotForm}
-            onSubmit={values => this.onSubmit(values)}
-            initialValues={{
-              email: '',
-            }}
-            validationSchema={forgetValidation}>
-            {({ handleChange, values, handleSubmit, errors, resetForm }) => {
-              return (
+         
+          
                 <View style={[styles.container]}>
                   <View style={styles.logoStyle}>
                     <Image style={styles.applogo} source={appLogos.appLogo} />
@@ -62,7 +71,6 @@ class ForgotPassword extends Component {
                   </View>
                   <View style={styles.textNormal}>
                     <CTextfield
-                      ref={email}
                       secureTextEntry={false}
                       inputLabel='Email'
                       placeholder='email@example.com'
@@ -75,8 +83,9 @@ class ForgotPassword extends Component {
                       outlineColor={colors.white}
                       bgColor={{ color: colors.white }}
                       activeOutlineColor={colors.primary}
-                      values={values?.email}
-                      error={errors?.email}
+                      values={email}
+                      keyboardType={'email-address'}
+                      onChangeText={(text) => this.setState({ email: text })}
                     />
                     <CustomButton
                       onPress={onSubmit}
@@ -86,9 +95,8 @@ class ForgotPassword extends Component {
                     />
                   </View>
                 </View>
-              );
-            }}
-          </Formik>
+          
+       
         </View>
       </CustomBackground>
     );

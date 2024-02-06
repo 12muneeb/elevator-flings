@@ -20,11 +20,10 @@ export const colors = {
   orange: '#f9804d',
   darkBlue: '#397EE6',
   // darkBlue: '#3d6fe3',
-  lightGray: 'rgb(225,225,225)',
+  lightGray: '#A0A0A1',
   focusIcon: '#973E4E',
   gray: '#1F222A',
   darkGray: '#767373',
-  lightGray: '#EFF0F6',
   lightpurple:'#231925',
 
   // Text Colors

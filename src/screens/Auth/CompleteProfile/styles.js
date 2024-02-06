@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors} from '../../../utils';
+import { colors, family, size} from '../../../utils';
 import appStyles from '../../appStyles';
 
 const styles = StyleSheet.create({
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
   profileImgView: {
     backgroundColor: '#313131',
-    borderColor: colors.white,
+    borderColor: '#A0A0A1',
     borderWidth: 1,
   },
 
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     borderColor: colors.white,
     borderWidth: 1,
-    right: 10,
-    bottom: 55
+    right: 8,
+    bottom: 5
   },
 
   uploadIcon: {
@@ -90,6 +90,19 @@ const styles = StyleSheet.create({
     ...appStyles.font16,
     ...appStyles.family_SofiaPro_Regular,
   },
+  dropdown:{
+    height:55,
+    backgroundColor:colors.gray,
+    borderWidth:0,
+  },
+  dropdownIcon: {width: 20, height: 20,tintColor:colors.lightGray},
+  label:{
+    fontSize:size.small,
+    fontFamily:family.SofiaProBold,
+  },
+  inputlabel:
+    {color:colors.lightGray,fontSize:size.normal}
+  
 });
 
 export default styles;
