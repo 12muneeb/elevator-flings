@@ -11,7 +11,6 @@ import CustomBackground from '../../components/CustomBackground';
 import { appIcons, appLogos } from '../../assets/index';
 import styles from './styles';
 import CustomText from '../../components/CustomText';
-import ConfirmationModal from '../../containers/Modal/ConfirmationModal';
 import { getDeviceToken } from '../../redux/actions/appAction';
 import SocialSignin from '../../components/SocialSignin';
 import { socialSignin } from '../../redux/actions/authAction';

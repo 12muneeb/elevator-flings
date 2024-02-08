@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { SelectList } from 'react-native-dropdown-select-list'
+import Toast from 'react-native-toast-message'
 import { appIcons } from '../../../assets'
 import CTextfield from '../../../components/CTextField'
 import CustomBackground from '../../../components/CustomBackground'
+import CustomButton from '../../../components/CustomButton'
 import Img from '../../../components/Img'
+import NavService from '../../../helpers/NavService'
 import { colors, family } from '../../../utils'
 import { styles } from './styles'
-import CustomButton from '../../../components/CustomButton'
-import NavService from '../../../helpers/NavService'
-import Toast from 'react-native-toast-message'
 
 export class Description extends Component {
   constructor(props) {

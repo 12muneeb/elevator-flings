@@ -1,8 +1,6 @@
 // @flow
 import {Platform, Alert, Linking, PermissionsAndroid} from 'react-native';
 import moment from 'moment';
-// import {DISCARD_WARNING} from '../constants';
-import {AlertHelper} from '../services/AlertService';
 import Toast from 'react-native-toast-message';
 
 export const TIME1 = 'HH:mm';
@@ -56,16 +54,7 @@ class Util {
       type: type,
       visibilityTime: 3000,
     });
-    // if( AlertHelper.dropDown?.state && AlertHelper.dropDown.state.isOpen ) {
-    //   AlertHelper.dropDown.close(()=> {
-    //     this.setState({ isOpen: false })
-    //   })
-    // }
-    // AlertHelper.show(type, title, message);
-    // Alert.alert( title, message,
-    //     [ {text: 'OK', onPress: () => newInstance && newInstance.state && newInstance.state.loading && newInstance.setState({ loading: false }) } ],
-    //     {cancelable: true},
-    // );
+
   }
 
   capitalizeFirstLetter(string) {

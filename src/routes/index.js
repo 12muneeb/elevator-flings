@@ -1,22 +1,20 @@
 // @app
-import React, {Component} from 'react';
-import {View, StyleSheet, PermissionsAndroid, Platform} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {connect} from 'react-redux';
-import SplashScreen from 'react-native-splash-screen';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { Component } from 'react';
+import { PermissionsAndroid, Platform, StyleSheet, View } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
+import SplashScreen from 'react-native-splash-screen';
+import { connect } from 'react-redux';
 // Firebase Messaging
 // import messaging from '@react-native-firebase/messaging';
 // @navigations
-import AuthNavigation from './stacks/authNavigation';
 import AppNavigation from './stacks/appNavigation';
-import {_AppLayout} from '../redux/actions';
+import AuthNavigation from './stacks/authNavigation';
 // Nav Service
 import NavService from '../helpers/NavService';
 // Custom Modal
-import ConfirmationModal from '../containers/Modal/ConfirmationModal';
 // Custom Action for handling state in the popup
-import {toggleVerificationPopUp} from '../redux/actions/authAction';
+import { toggleVerificationPopUp } from '../redux/actions/authAction';
 
 const OsVer = Platform.constants['Release'];
 
@@ -94,13 +92,7 @@ class MainNavigation extends Component {
             <AuthNavigation initialRoute={undefined} />
           )}
           {/* IF USER PROFILE STORE IS EMPTY */}
-          <ConfirmationModal
-            isModalVisible={verificationPopUp}
-            togglePopup={() => this.props.toggleVerificationPopUp()}
-            Title={'Submitted'}
-            SubTitle={'Pending verification by Everso'}
-            verificationPopUp
-          />
+       
         </View>
       </NavigationContainer>
     );

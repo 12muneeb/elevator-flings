@@ -1,5 +1,6 @@
+import * as EmailValidator from 'email-validator';
 import React, { Component } from 'react';
-import { Alert, Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
 import { appIcons, appLogos } from '../../../assets/index';
@@ -9,7 +10,6 @@ import CustomButton from '../../../components/CustomButton';
 import CustomText from '../../../components/CustomText';
 import NavService from '../../../helpers/NavService';
 import { colors, family, size } from '../../../utils';
-import * as EmailValidator from 'email-validator'
 import styles from './styles';
 class Login extends Component {
   constructor(props) {

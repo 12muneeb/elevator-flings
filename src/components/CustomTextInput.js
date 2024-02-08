@@ -53,24 +53,25 @@ export default function CustomTextInput(props) {
     <View
       style={{
         width: '100%',
-        marginTop: margintop ? 0 : 18,
       }}>
       <View
         style={[
           {
             alignSelf: 'center',
-            width: '87%',
+            width: '90%',
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: borderRadius,
-            paddingHorizontal: 7,
+            paddingHorizontal: 12,
             paddingVertical: 2,
             height: multiline ? 150 : 50,
             borderWidth: 1,
             borderColor: isFocused ? colors.primary : colors.black,
             marginVertical: 0,
-            backgroundColor: colors.white,
+            backgroundColor: colors.gray,
+            height:55
+
           },
           // !isFocused ? { ...Shadows.shadow3 } : null,
           containerStyle,

@@ -1,27 +1,18 @@
+import * as EmailValidator from 'email-validator';
 import React, { Component, createRef } from 'react';
-import { Text, View, Pressable, Keyboard, Image, TouchableOpacity, Alert } from 'react-native';
-import { Formik } from 'formik';
+import { Image, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
+import { appIcons, appImages, appLogos } from '../../../assets/index';
+import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import CustomTextInput, {
-  CustomPhoneInput,
-} from '../../../components/CustomTextInput';
-import { appIcons, appImages, appLogos } from '../../../assets/index';
-import ProfileImage from '../../../components/ProfileImage';
-import ImagePicker from '../../../components/ImagePicker';
-import Img from '../../../components/Img';
 import CustomText from '../../../components/CustomText';
+import Img from '../../../components/Img';
 import NavService from '../../../helpers/NavService';
-import { signupValidations } from '../../../utils/validation';
-import { colors, family, size } from '../../../utils';
 import { signUpUser } from '../../../redux/actions/authAction';
-import appStyles from '../../appStyles';
-import ConfirmationModal from '../../../containers/Modal/ConfirmationModal';
+import { colors, family, size } from '../../../utils';
 import styles from './styles';
-import CTextfield from '../../../components/CTextField';
-import * as EmailValidator from 'email-validator';
-import Toast from 'react-native-toast-message';
 
 class Signup extends Component {
   constructor(props) {

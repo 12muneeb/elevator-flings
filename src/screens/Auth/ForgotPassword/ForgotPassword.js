@@ -1,19 +1,17 @@
+import * as EmailValidator from 'email-validator';
 import React, { Component, createRef } from 'react';
-import { View, Image, Keyboard, Alert } from 'react-native';
+import { Image, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { appIcons, appLogos } from '../../../assets';
+import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import { appIcons, appLogos } from '../../../assets';
-import { forgotPassword } from '../../../redux/actions/authAction';
-import { forgetValidation } from '../../../utils/validation';
-import styles from './styles';
-import NavService from '../../../helpers/NavService';
-import CTextfield from '../../../components/CTextField';
-import { colors, family, size } from '../../../utils';
 import CustomText from '../../../components/CustomText';
-import Toast from 'react-native-toast-message';
-import * as EmailValidator from 'email-validator';
+import NavService from '../../../helpers/NavService';
+import { forgotPassword } from '../../../redux/actions/authAction';
+import { colors, family, size } from '../../../utils';
+import styles from './styles';
 class ForgotPassword extends Component {
   constructor(props) {
     super(props);

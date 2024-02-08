@@ -1,27 +1,21 @@
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 import React, { useEffect, useState } from 'react';
 import {
+  BackHandler,
+  Image,
   Text,
   TouchableOpacity,
-  View,
-  Image,
-  BackHandler,
-  Platform,
+  View
 } from 'react-native';
-import { useDispatch } from 'react-redux';
 import Toast from 'react-native-toast-message';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { useDispatch } from 'react-redux';
+import { appLogos } from '../../../assets/index';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
-import { appLogos } from '../../../assets/index';
-import {
-  toggleVerificationPopUp,
-  otpVerify,
-} from '../../../redux/actions/authAction';
-import { getDeviceToken } from '../../../redux/actions/appAction';
-import styles from './styles';
-import NavService from '../../../helpers/NavService';
 import CustomText from '../../../components/CustomText';
+import NavService from '../../../helpers/NavService';
 import { colors, family, size } from '../../../utils';
+import styles from './styles';
 const Otp = ({ navigation, route }) => {
   const { screenName, user_id } = route.params;
   console.log('screenName', screenName, 'user_id', user_id);

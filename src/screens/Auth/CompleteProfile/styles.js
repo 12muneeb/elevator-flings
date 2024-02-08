@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { colors, family, size} from '../../../utils';
+import {StyleSheet} from 'react-native';
+import {colors, family, size} from '../../../utils';
 import appStyles from '../../appStyles';
 
 const styles = StyleSheet.create({
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     ...appStyles.family_SofiaPro_Regular,
     color: colors.black,
     marginVertical: 25,
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
   },
   textNormal: {
     ...appStyles.font14,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     textDecorationColor: colors.primary,
     ...appStyles.font14,
     ...appStyles.family_SofiaPro_Regular,
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
   },
 
   profileImgView: {
@@ -49,22 +49,22 @@ const styles = StyleSheet.create({
   profileImg: {
     width: 80,
     height: 60,
-    resizeMode: "contain",
-    tintColor:colors.darkGray
+    resizeMode: 'contain',
+    tintColor: colors.darkGray,
   },
 
   uploadIconCont: {
-    position: "absolute",
+    position: 'absolute',
     width: 30,
     height: 30,
     backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 80,
     borderColor: colors.white,
     borderWidth: 1,
     right: 8,
-    bottom: 5
+    bottom: 5,
   },
 
   uploadIcon: {
@@ -77,32 +77,58 @@ const styles = StyleSheet.create({
     ...appStyles.alignCenter,
     ...appStyles.justifyCenter,
     height: '100%',
-    backgroundColor:'red'
+    backgroundColor: 'red',
   },
 
   signUpBtn: {
     borderRadius: 26,
     marginTop: 15,
-    marginBottom:16
+    marginBottom: 16,
   },
 
   signUpTitle: {
     ...appStyles.font16,
     ...appStyles.family_SofiaPro_Regular,
   },
-  dropdown:{
-    height:55,
-    backgroundColor:colors.gray,
-    borderWidth:0,
+  dropdown: {
+    height: 55,
+    backgroundColor: colors.gray,
+    borderWidth: 0,
   },
-  dropdownIcon: {width: 20, height: 20,tintColor:colors.lightGray},
-  label:{
-    fontSize:size.small,
-    fontFamily:family.SofiaProBold,
+  dropdownIcon: {
+    width: 20,
+    height: 20,
+    tintColor: colors.lightGray,
+    marginTop: 3,
   },
-  inputlabel:
-    {color:colors.lightGray,fontSize:size.normal}
-  
+  label: {
+    fontSize: size.small,
+    fontFamily: family.SofiaProBold,
+  },
+  inputlabel: {color: colors.lightGray, fontSize: size.normal},
+  propertyImage: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  imageBtn: {
+    width: 350,
+    height: 130,
+    borderColor: colors.red,
+    borderStyle: 'dashed',
+    borderWidth: 1.5,
+    borderRadius: 20,
+    backgroundColor: colors.lightYellow,
+    marginTop: 18,
+  },
+  up: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: colors.red,
+  },
 });
 
 export default styles;

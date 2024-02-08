@@ -1,6 +1,5 @@
 import { Keyboard } from 'react-native';
 import { Image as ImageCompressor } from 'react-native-compressor';
-// export { WP, HP } from './styling/responsive';
 export { colors } from './colors';
 export {
   paginationLimit,
@@ -12,7 +11,6 @@ export {
   deviceType,
   hasNotch,
 } from './constants';
-export { loginValidation } from './validation';
 export { WP, HP } from './styling/responsive';
 export { size, family } from './sizes';
 
