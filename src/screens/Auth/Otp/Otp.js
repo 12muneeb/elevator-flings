@@ -8,32 +8,40 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { appLogos } from '../../../assets/index';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
 import CustomText from '../../../components/CustomText';
 import NavService from '../../../helpers/NavService';
 import { colors, family, size } from '../../../utils';
+import { otpVerify } from '../../../redux/actions/authAction';
 import styles from './styles';
 const Otp = ({ navigation, route }) => {
-  const { screenName, user_id } = route.params;
-  console.log('screenName', screenName, 'user_id', user_id);
+  const { screenName, id } = route.params;
+
 
   const dispatch = useDispatch();
   let timer;
   const [code, setCode] = useState();
+  console.log('====================================', screenName, id, code);
   const [timerCode, setTimerCode] = useState(30);
   const [resend, setResend] = useState(false);
   const onSubmit = () => {
-    if(!code || code.length === 0) {
+    if (!code || code.length === 0) {
       Toast.show({
         text1: 'Please enter OTP',
         type: 'error',
         visibilityTime: 3000,
       });
-    }else{
-      NavService.navigate('CompleteProfile');
+    } else {
+      const formdata = new FormData
+      formdata.append('user_id', id);
+      formdata.append("verified_code", code);
+      formdata.append("type", screenName == 'forgot' ? "forgot" : 'account_verify')
+      formdata.append("device_type", 'android')
+      formdata.append("device_token", '12345')
+      dispatch(otpVerify(formdata, screenName));
     }
   }
   const startInterval = () => {
@@ -151,6 +159,7 @@ const Otp = ({ navigation, route }) => {
       </View>
     </CustomBackground>
   );
-          }
+}
 
-export default Otp
+const actions = { otpVerify };
+export default connect(null, actions)(Otp);

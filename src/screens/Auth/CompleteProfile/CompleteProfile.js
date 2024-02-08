@@ -1,22 +1,24 @@
-import React, {Component} from 'react';
-import {View} from 'react-native';
-import {SelectList} from 'react-native-dropdown-select-list';
+import React, { Component } from 'react';
+import { Alert, View } from 'react-native';
+import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {connect} from 'react-redux';
-import {appIcons} from '../../../assets/index';
+import { connect } from 'react-redux';
+import { appIcons } from '../../../assets/index';
 import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
+import CustomTextInput from '../../../components/CustomTextInput';
 import ImagePicker from '../../../components/ImagePicker';
 import Img from '../../../components/Img';
 import ProfileImage from '../../../components/ProfileImage';
 import NavService from '../../../helpers/NavService';
-import {completeProfile} from '../../../redux/actions/authAction';
-import {colors, family} from '../../../utils';
+import { completeProfile } from '../../../redux/actions/authAction';
+import { colors, family } from '../../../utils';
 import appStyles from '../../appStyles';
-import styles from './styles';
 import UploadCard from './UploadCard';
-import CustomTextInput from '../../../components/CustomTextInput';
+import styles from './styles';
+import Toast from 'react-native-toast-message';
+
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -26,40 +28,64 @@ class CompleteProfile extends Component {
       name: '',
       Dob: '',
       selected: '',
+      about: ''
     };
   }
-  // onSubmit = async (values) => {
-  //   let payload = {...values};
-  //   payload['user_type'] = 'business';
-  //   console.log('payload',payload)
-  //   // this.props.signUpUser(payload);
-  // }
 
   showDatePicker = () => {
-    this.setState({isDatePickerVisible: true});
+    this.setState({ isDatePickerVisible: true });
   };
 
   hideDatePicker = () => {
-    this.setState({isDatePickerVisible: false});
+    this.setState({ isDatePickerVisible: false });
   };
 
   handleDateConfirm = date => {
     const formattedDate = date.toISOString().split('T')[0];
-    this.setState({Dob: formattedDate});
+    this.setState({ Dob: formattedDate });
     this.hideDatePicker();
   };
 
   render() {
-    const {fullName, bussinessProfileImage, Dob, selected} = this.state;
+    const { fullName, bussinessProfileImage, Dob, about, selected } = this.state;
     const data = [
-      {key: '0', value: 'Male'},
-      {key: '1', value: 'Female'},
+      { key: '0', value: 'Male' },
+      { key: '1', value: 'Female' },
     ];
+
     const onSubmit = () => {
-      NavService.navigate('Description');
+      if (!fullName) {
+        Toast.show({
+          text1: "Name field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!Dob) {
+        Toast.show({
+          text1: "Date of Birth field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!selected) {
+        Toast.show({
+          text1: "Gender field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!about) {
+        Toast.show({
+          text1: "About yourself field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      }
+      else {
+        Alert.alert('success')
+      }
     };
+
     const updateImageInGallery = (path, mime, type) => {
-      this.setState({bussinessProfileImage: {path, mime, type}});
+      this.setState({ bussinessProfileImage: { path, mime, type } });
     };
 
     return (
@@ -68,7 +94,7 @@ class CompleteProfile extends Component {
         titleText={'Set Profile'}
         onBack={() => NavService.goBack()}>
         <View style={styles.container}>
-          <View style={[styles.container, {marginTop: 50}]}>
+          <View style={[styles.container, { marginTop: 50 }]}>
             <ImagePicker
               onImageChange={(path, mime, type) => {
                 updateImageInGallery(path, mime, type);
@@ -84,7 +110,7 @@ class CompleteProfile extends Component {
                 imageUri={
                   bussinessProfileImage == null
                     ? appIcons.user
-                    : {uri: bussinessProfileImage.path}
+                    : { uri: bussinessProfileImage.path }
                 }
                 viewStyle={styles.profileImgView}
                 style={
@@ -103,7 +129,7 @@ class CompleteProfile extends Component {
                 />
               </View>
             </ImagePicker>
-            <View style={{marginTop: '10%', gap: 15}}>
+            <View style={{ marginTop: '10%', gap: 15 }}>
               <UploadCard />
               <CTextfield
                 secureTextEntry={false}
@@ -114,11 +140,11 @@ class CompleteProfile extends Component {
                 numberOfLines={1}
                 iconColor={colors.primary}
                 outlineColor={colors.gray}
-                bgColor={{backgroundColor: colors.gray}}
+                bgColor={{ backgroundColor: colors.gray }}
                 activeOutlineColor={colors.primary}
                 toggleSecure
                 values={fullName}
-                onChangeText={text => this.setState({fullName: text})}
+                onChangeText={text => this.setState({ fullName: text })}
               />
               <CustomTextInput
                 showSoftInputOnFocus={false}
@@ -128,18 +154,17 @@ class CompleteProfile extends Component {
                 }}
                 maxLength={30}
                 placeholder={'Exp Date'}
-                value={this.state.Dob}
+                value={Dob}
                 placeholderColor={colors.lightGray}
-                borderRadius={20}
                 borderColor={colors.primary}
                 onFocus={this.showDatePicker}
                 handlePress={this.showDatePicker}
-                inputStyle={{color: colors.lightGray}}
+                inputStyle={{ color: colors.lightGray }}
               />
 
               <SelectList
                 setSelected={selected =>
-                  this.setState({selected: data[selected]?.value})
+                  this.setState({ selected: data[selected]?.value })
                 }
                 fontFamily={family.SofiaProBold}
                 data={data}
@@ -160,7 +185,23 @@ class CompleteProfile extends Component {
                 dropdownTextStyles={styles.inputlabel}
                 inputStyles={styles.inputlabel}
               />
-
+              <CustomTextInput
+                textAlignVertical="top"
+                maxLength={350}
+                multiline
+                placeholder={'About yourself'}
+                placeholderTextColor={colors.lightGray}
+                value={about}
+                color={'black'}
+                isBorderShow
+                keyboardType={'default'}
+                onChangeText={value => this.setState({ about: value })}
+                textInputStyles={{ height: 150, color: colors.white }}
+                containerStyle={{
+                  height: 150,
+                  width: '90%',
+                }}
+              />
               <DateTimePickerModal
                 isVisible={this.state.isDatePickerVisible}
                 mode="date"
@@ -182,5 +223,6 @@ class CompleteProfile extends Component {
   }
 }
 
-const actions = {completeProfile};
+
+const actions = { completeProfile };
 export default connect(null, actions)(CompleteProfile);

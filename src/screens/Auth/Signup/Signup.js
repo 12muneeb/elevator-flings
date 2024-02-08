@@ -56,7 +56,18 @@ class Signup extends Component {
         });
       }
       else {
-        NavService.navigate('Otp')
+        // NavService.navigate('Otp')
+        // let payload = {
+        //   'email':email,
+        //   'password':password,
+        //   "user_type":'user'
+        // }
+        const formdata = new FormData();
+        formdata.append('email', email);
+        formdata.append('password', password);
+        formdata.append('user_type', 'user');
+        this.props.signUpUser(formdata);
+        
       }
     }
 

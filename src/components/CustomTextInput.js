@@ -66,8 +66,6 @@ export default function CustomTextInput(props) {
             paddingHorizontal: 12,
             paddingVertical: 2,
             height: multiline ? 150 : 50,
-            borderWidth: 1,
-            borderColor: isFocused ? colors.primary : colors.black,
             marginVertical: 0,
             backgroundColor: colors.gray,
             height:55

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { SelectList } from 'react-native-dropdown-select-list'
 import Toast from 'react-native-toast-message'
 import { appIcons } from '../../../assets'
 import CTextfield from '../../../components/CTextField'
 import CustomBackground from '../../../components/CustomBackground'
 import CustomButton from '../../../components/CustomButton'
+import CustomTextInput from '../../../components/CustomTextInput'
 import Img from '../../../components/Img'
 import NavService from '../../../helpers/NavService'
 import { colors, family } from '../../../utils'
@@ -20,10 +21,14 @@ export class Description extends Component {
       weight: '',
       height: '',
       networth: '',
+      selected: '',
+      selected1: '',
+      selected2: '',
+      texttags: ''
     }
   }
   render() {
-    const {  career, weight, networth, height } = this.state
+    const { career, weight, networth, height, selected, selected2, selected1, interests, texttags } = this.state
 
     const intentionData = [
       { key: '0', value: 'Action' },
@@ -37,35 +42,62 @@ export class Description extends Component {
       { key: '0', value: 'Bachelors' },
       { key: '1', value: 'Intermediate' },
     ];
+    const handleTagDeletes = index => {
+      const { interests } = this.state;
+      interests.splice(index, 1);
+      this.setState({ interests });
+    };
     const onSubmit = () => {
-     if(!career){
-      Toast.show({
-        text1: "Career field can't be empty.",
-        type: 'error',
-        visibilityTime: 3000,
-      })
-     }else if(!weight){
-      Toast.show({
-        text1: "Weight field can't be empty.",
-        type: 'error',
-        visibilityTime: 3000,
-      })
-     }else if(!height){
-      Toast.show({
-        text1: "Height field can't be empty.",
-        type: 'error',
-        visibilityTime: 3000,
-      })
-     }else if(!networth){
-      Toast.show({
-        text1: "Networth field can't be empty.",
-        type: 'error',
-        visibilityTime: 3000,
-      })
-     }else{
-      NavService.navigate('Descriptions');
-     }
+      if (!selected) {
+        Toast.show({
+          text1: "Intention field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!selected1) {
+        Toast.show({
+          text1: "Looking for field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      }
+      else if (!interests) {
+        Toast.show({
+          text1: "Interests field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      }
+      else if (!selected2) {
+        Toast.show({
+          text1: "Education field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      }
+      else if (!weight) {
+        Toast.show({
+          text1: "Weight field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!height) {
+        Toast.show({
+          text1: "Height field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else if (!networth) {
+        Toast.show({
+          text1: "Networth field can't be empty.",
+          type: 'error',
+          visibilityTime: 3000,
+        })
+      } else {
+        NavService.navigate('Descriptions');
+      }
     }
+
     return (
       <CustomBackground showLogo={false} titleText={'Descriptions'} skip>
         <View style={[styles.container, { marginTop: 80 }]}>
@@ -94,8 +126,8 @@ export class Description extends Component {
               inputStyles={styles.inputStyles}
             />
             <SelectList
-              setSelected={selected =>
-                this.setState({ selected: lookingforData[selected]?.value })
+              setSelected={selected1 =>
+                this.setState({ selected1: lookingforData[selected1]?.value })
               }
               fontFamily={family.SofiaProBold}
               data={lookingforData}
@@ -116,9 +148,55 @@ export class Description extends Component {
               dropdownTextStyles={{ color: colors.lightGray }}
               inputStyles={styles.inputStyles}
             />
+            <CustomTextInput
+              placeholder={'Interest'}
+              blurOnSubmit={false}
+              placeholderColor={colors.lightGray}
+              value={texttags}
+              containerStyle={styles.containerStyle}
+              onSubmitEditing={() => {
+                if (texttags.trim() !== '') {
+                  this.setState({
+                    interests: [...interests, texttags],
+                  });
+                  this.setState({ texttags: '' });
+                }
+              }}
+              onChangeText={value => {
+                this.setState({ texttags: value });
+              }}
+            />
+            {interests?.length > 0 ? (
+              <View style={styles.interest}>
+                {interests?.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.tag}>
+                      <Text style={styles.tagtxt}>{item}</Text>
+                      <TouchableOpacity
+                        onPress={() => handleTagDeletes(index)}
+                        style={{
+                          backgroundColor: colors.white,
+                          borderRadius: 10,
+                          padding: 4,
+                          justifyContent: 'center',
+                          left: 5,
+                        }}>
+                        <Img
+                          local
+                          style={styles.remove}
+                          src={appIcons.close}
+                          resizeMode={'contain'}
+                          tintColor={'#FFC6C6'}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </View>
+            ) : null}
             <SelectList
-              setSelected={selected =>
-                this.setState({ selected: educationData[selected]?.value })
+              setSelected={selected2 =>
+                this.setState({ selected2: educationData[selected2]?.value })
               }
               fontFamily={family.SofiaProBold}
               data={educationData}
@@ -203,12 +281,12 @@ export class Description extends Component {
               keyboardType='number-pad'
               onChangeText={(text) => this.setState({ networth: text })}
             />
-              <CustomButton
-                title="Continue"
-                onPress={onSubmit}
-                buttonStyle={styles.signUpBtn}
-                textStyle={styles.signUpTitle}
-              />
+            <CustomButton
+              title="Continue"
+              onPress={onSubmit}
+              buttonStyle={styles.signUpBtn}
+              textStyle={styles.signUpTitle}
+            />
           </View>
         </View>
       </CustomBackground>

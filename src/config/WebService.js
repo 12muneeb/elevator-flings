@@ -125,81 +125,8 @@ export const EVENT_DETAIL = {
   access_token_required: true,
   type: REQUEST_TYPE.GET,
 };
-export const EVENT_REQUEST = {
-  route: 'event/request',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const GET_LIST_CATRGORY = {
-  route: 'list-categories',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const GET_BLOCKED_USERS = {
-  route: 'user/block/list',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const HANDLE_BLOCKED_USER = {
-  route: 'user/block/create',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const REMOVE_USER_FROM_EVENT = {
-  route: 'event/cancel-request',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const DELETE_PROPERTY = {
-  route: 'property/delete',
-  access_token_required: true,
-  type: REQUEST_TYPE.DELETE,
-};
-export const DELETE_EVENT = {
-  route: 'event/delete',
-  access_token_required: true,
-  type: REQUEST_TYPE.DELETE,
-};
-export const PROPERTY_UPDATE = {
-  route: 'property/update',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const GET_ALL_EVENTS = {
-  route: 'event/list',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const GET_SEARCH_INFO = {
-  route: 'event/property/filter',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const ADD_EVENT = {
-  route: 'event/create',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const UPDATE_CURRENT_EVENT = {
-  route: 'event/update',
-  access_token_required: true,
-  type: REQUEST_TYPE.POST,
-};
-export const FETCH_CHAT_LIST = {
-  route: 'chat/group-list',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const FETCH_EVENT_COMING_USER_LIST = {
-  route: 'event/coming-users-lists',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
-export const FETCH_NOTIFICATION = {
-  route: 'user/notification-list',
-  access_token_required: true,
-  type: REQUEST_TYPE.GET,
-};
+
+
 export const callRequest = function (
   url,
   data,
@@ -271,23 +198,4 @@ export default {
   RESEND_OTP,
   VERIFY_OTP,
   FORGOT_PASSWORD,
-  CREATE_PROPERTY,
-  GET_ALL_PROPERTY,
-  GET_SEARCH_INFO,
-  GET_PROPERTY_DETAIL,
-  DELETE_PROPERTY,
-  DELETE_EVENT,
-  PROPERTY_UPDATE,
-  GET_ALL_EVENTS,
-  ADD_EVENT,
-  UPDATE_CURRENT_EVENT,
-  GET_LIST_CATRGORY,
-  GET_BLOCKED_USERS,
-  HANDLE_BLOCKED_USER,
-  REMOVE_USER_FROM_EVENT,
-  EVENT_DETAIL,
-  EVENT_REQUEST,
-  FETCH_CHAT_LIST,
-  FETCH_EVENT_COMING_USER_LIST,
-  FETCH_NOTIFICATION,
 };

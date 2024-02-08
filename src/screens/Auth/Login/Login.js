@@ -10,6 +10,7 @@ import CustomButton from '../../../components/CustomButton';
 import CustomText from '../../../components/CustomText';
 import NavService from '../../../helpers/NavService';
 import { colors, family, size } from '../../../utils';
+import { loginCurrentUser } from '../../../redux/actions/authAction';
 import styles from './styles';
 class Login extends Component {
   constructor(props) {
@@ -50,7 +51,14 @@ class Login extends Component {
         });
       }
       else {
-       NavService.navigate('Home')
+        const formdata = new FormData
+        formdata.append('email', email)
+        formdata.append('password', password)
+        formdata.append('user_type', 'user')
+        formdata.append('device_type', 'android')
+        formdata.append('device_token', '1233')
+        this.props.loginCurrentUser(formdata)
+
       }
     }
     const onForget = () => {
@@ -151,5 +159,6 @@ class Login extends Component {
   }
 }
 
-// const actions = { loginCurrentUser };
-export default connect()(Login);
+
+const actions = { loginCurrentUser };
+export default connect(null, actions)(Login);

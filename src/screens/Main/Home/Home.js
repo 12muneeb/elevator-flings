@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import AppBackground from '../../../components/AppBackground'
 
 export class Home extends Component {
   render() {
     return (
-      <View>
-        <Text> textInComponent </Text>
-      </View>
+    <AppBackground title={'Hello'} menu></AppBackground>
+
     )
   }
 }

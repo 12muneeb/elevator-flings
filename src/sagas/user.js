@@ -1,4 +1,4 @@
-import {take, put, call, fork} from 'redux-saga/effects';
+import { take, put, call, fork } from 'redux-saga/effects';
 import ActionTypes from '../redux/constants';
 import {
   loginUser,
@@ -7,7 +7,7 @@ import {
   logoutUser,
   toggleVerificationPopUp,
 } from '../redux/actions/authAction';
-import {loaderStart, loaderStop} from '../redux/actions/appAction';
+import { loaderStart, loaderStop } from '../redux/actions/appAction';
 import API_URL, {
   LOGIN,
   SOCIAL_SIGN_IN,
@@ -26,31 +26,34 @@ import API_URL, {
 import ApiSauce from '../services/ApiSauce';
 import Util from '../utils/Utils';
 import NavService from '../helpers/NavService';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 function* login() {
   while (true) {
-    const {payload} = yield take(ActionTypes.LOGIN_USER.REQUEST);
+    const { payload } = yield take(ActionTypes.LOGIN_USER.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
         callRequest,
         LOGIN,
         payload,
-        '',
-        '',
+        // '',
+        // '',
         {},
         ApiSauce,
       );
       yield put(loaderStop());
+      console.log('dfdfdf', response)
       if (response.status === 1) {
         if (response?.data?.is_verified == 0) {
+          console.log('00000', response)
           NavService.navigate('Otp', {
             user_id: response?.data?.id,
             screenName: 'signup',
           });
           Util.DialogAlert(response.message, 'success');
         } else if (response?.data?.is_account_verified == 0) {
+          console.log('099', response)
           NavService.navigate('PreLogin', {
             screen: 'Otp',
           });
@@ -74,30 +77,35 @@ function* login() {
 }
 
 function* signUp() {
+
+  console.log('sign starttttttttttttttttttttttttttttttttttt');
   while (true) {
-    const {payload} = yield take(ActionTypes.SIGNUP_USER.REQUEST);
+
+    const { payload } = yield take(ActionTypes.SIGNUP_USER.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
         callRequest,
         SIGNUP,
         payload,
-        '',
-        '',
+        // '',
+        // '',
         {},
         ApiSauce,
       );
       yield put(loaderStop());
       if (response.status === 1) {
         Util.DialogAlert(response.message, 'success');
+        console.log('responfffse', response);
         NavService.navigate('Otp', {
           screenName: 'signup',
-          user_id: response.data?.user_id,
+          id: response.data?.user_id,
         });
         // NavService.navigate('SetupAddress', {
         //   user: response.data,
         // });
       } else {
+        console.log('response else', response.message);
         Util.DialogAlert(response.message);
       }
     } catch (error) {
@@ -110,8 +118,7 @@ function* signUp() {
 
 function* oTPVerify() {
   while (true) {
-    const {payload, screen} = yield take(ActionTypes.VERIFY_OTP.REQUEST);
-    console.log('screen', screen);
+    const { payload, screen } = yield take(ActionTypes.VERIFY_OTP.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -125,16 +132,23 @@ function* oTPVerify() {
       );
       yield put(loaderStop());
       if (response.status === 1) {
-        if (screen === 'signup') {
-          NavService.navigate('PreLogin', {
+        if (screen == 'signup') {
+          NavService.navigate('CompleteProfile', {
             screen: 'Otp',
           });
           yield put(toggleVerificationPopUp(true));
         } else {
           yield put(saveTokenForLoginUser(response?.bearer_token));
-          NavService.navigate('ResetPassword', {
-            user_id: response.data,
-          });
+          if (screen == 'forgot') {
+            NavService.navigate('ResetPassword', {
+              user_id: response.data,
+            });
+          } else {
+            NavService.navigate('CompleteProfile', {
+              user_id: response.data,
+            });
+          }
+
         }
         Util.DialogAlert(response.message, 'success');
       } else {
@@ -150,7 +164,7 @@ function* oTPVerify() {
 
 function* resendOTP() {
   while (true) {
-    const {payload} = yield take(ActionTypes.RESEND_OTP.REQUEST);
+    const { payload } = yield take(ActionTypes.RESEND_OTP.REQUEST);
     console.log('payload', payload);
     yield put(loaderStart());
     try {
@@ -180,7 +194,7 @@ function* resendOTP() {
 
 function* resetPassword() {
   while (true) {
-    const {payload} = yield take(ActionTypes.RESEND_PASSWORD.REQUEST);
+    const { payload } = yield take(ActionTypes.RESEND_PASSWORD.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -210,7 +224,7 @@ function* resetPassword() {
 
 function* forgotPassword() {
   while (true) {
-    const {payload} = yield take(ActionTypes.FORGOT_PASSWORD.REQUEST);
+    const { payload } = yield take(ActionTypes.FORGOT_PASSWORD.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -227,7 +241,7 @@ function* forgotPassword() {
         console.log('forgot', response);
         NavService.navigate('Otp', {
           screenName: 'forgot',
-          user_id: response.data?.user_id,
+          id: response.data?.user_id,
         });
         Util.DialogAlert(response.message, 'success');
       } else {
@@ -243,7 +257,7 @@ function* forgotPassword() {
 
 function* socialSignin() {
   while (true) {
-    const {payload} = yield take(ActionTypes.SOCIAL_SIGNUP_USER.REQUEST);
+    const { payload } = yield take(ActionTypes.SOCIAL_SIGNUP_USER.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -281,7 +295,7 @@ function* socialSignin() {
 }
 function* changePassword() {
   while (true) {
-    const {payload} = yield take(ActionTypes.CHANGE_PASSWORD.REQUEST);
+    const { payload } = yield take(ActionTypes.CHANGE_PASSWORD.REQUEST);
 
     yield put(loaderStart());
     try {
@@ -297,7 +311,7 @@ function* changePassword() {
       yield put(loaderStop());
       if (response.status === 1) {
         console.log('payload', response);
-        NavService.goBack();
+        NavService.navigate('Login');
         Util.DialogAlert(response.message, 'success');
       } else {
         Util.DialogAlert(response.message);
@@ -311,7 +325,7 @@ function* changePassword() {
 }
 function* deleteUser() {
   while (true) {
-    const {payload} = yield take(ActionTypes.DELETE_USER.REQUEST);
+    const { payload } = yield take(ActionTypes.DELETE_USER.REQUEST);
 
     yield put(loaderStart());
     try {
@@ -343,7 +357,7 @@ function* deleteUser() {
 }
 function* completeProfile() {
   while (true) {
-    const {payload} = yield take(ActionTypes.COMPLETE_PROFILE.REQUEST);
+    const { payload } = yield take(ActionTypes.COMPLETE_PROFILE.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -379,8 +393,8 @@ function* completeProfile() {
 }
 function* updateProfile() {
   while (true) {
-    const {payload, goBack,param} = yield take(ActionTypes.UPDATE_PROFILE.REQUEST);
-    console.log('UPDATE_PROFILE',param?.type)
+    const { payload, goBack, param } = yield take(ActionTypes.UPDATE_PROFILE.REQUEST);
+    console.log('UPDATE_PROFILE', param?.type)
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -399,18 +413,18 @@ function* updateProfile() {
         if (goBack) {
           NavService.goBack();
         }
-        if(param?.type =='notification'){
-       if(param?.on == 0){
-        Util.DialogAlert('Notification is turned OFF', 'success');
-       }
-       else{
-        Util.DialogAlert('Notification is turned ON', 'success');
-       }
+        if (param?.type == 'notification') {
+          if (param?.on == 0) {
+            Util.DialogAlert('Notification is turned OFF', 'success');
+          }
+          else {
+            Util.DialogAlert('Notification is turned ON', 'success');
+          }
         }
-        else{
+        else {
           Util.DialogAlert(response.message, 'success');
         }
-  
+
       } else {
         Util.DialogAlert(response.message);
       }
@@ -423,7 +437,7 @@ function* updateProfile() {
 }
 function* deleteUserAccount() {
   while (true) {
-    const {params} = yield take(ActionTypes.DELETE_USER.REQUEST);
+    const { params } = yield take(ActionTypes.DELETE_USER.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -452,7 +466,7 @@ function* deleteUserAccount() {
 }
 function* userLogout() {
   while (true) {
-    const {payload} = yield take(ActionTypes.USER_LOGOUT.REQUEST);
+    const { payload } = yield take(ActionTypes.USER_LOGOUT.REQUEST);
     yield put(loaderStart());
     try {
       const response = yield call(
@@ -481,16 +495,16 @@ function* userLogout() {
 
 export default function* root() {
   yield fork(login);
-  yield fork(socialSignin);
-  yield fork(completeProfile);
-  yield fork(updateProfile);
-  yield fork(deleteUserAccount);
-  yield fork(userLogout);
-  yield fork(changePassword);
-  yield fork(deleteUser);
+  // yield fork(socialSignin);
+  // yield fork(completeProfile);
+  // yield fork(updateProfile);
+  // yield fork(deleteUserAccount);
+  // yield fork(userLogout);
+  // yield fork(changePassword);
+  // yield fork(deleteUser);
   yield fork(signUp);
   yield fork(oTPVerify);
   yield fork(forgotPassword);
-  yield fork(resendOTP);
+  // yield fork(resendOTP);
   yield fork(resetPassword);
 }

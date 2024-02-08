@@ -16,6 +16,7 @@ class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      old_password: '',
       password: '',
       confirmPassword: ''
     };
@@ -42,21 +43,29 @@ class ResetPassword extends Component {
 
 
   render() {
-    const { password, confirmPassword } = this.state;
+    const { password, confirmPassword, old_password } = this.state;
     const onSubmit = () => {
-      if (!password) {
+      if (!old_password) {
+        Toast.show({
+          text1: 'Old Password field can\'t be empty.',
+          type: 'error',
+          visibilityTime: 3000
+        });
+      }
+      else if (!password) {
         Toast.show({
           text1: 'Password field can\'t be empty.',
           type: 'error',
           visibilityTime: 3000
         });
-      } else if (!confirmPassword) {
+      }
+      else if (!confirmPassword) {
         Toast.show({
-          text1: 'Confirm Password field can\'t be empty.',
+          text1: 'Repeat Password field can\'t be empty.',
           type: 'error',
           visibilityTime: 3000
-        });
-      } 
+        })
+      }
       else if (password !== confirmPassword) {
         Toast.show({
           text1: 'Passwords do not match.',
@@ -64,7 +73,10 @@ class ResetPassword extends Component {
           visibilityTime: 3000
         });
       } else {
-        NavService.navigate('Login');
+        const formdata = new FormData
+        formdata.append('new_password', password)
+        formdata.append('old_password', old_password)
+        this.props.resendPassword(formdata);
       }
     };
 
@@ -74,57 +86,72 @@ class ResetPassword extends Component {
         titleText={'Reset Password'}
         onBack={() => NavService.navigate('Login')}>
         <View style={styles.container}>
-      
-                <View style={[styles.container, { marginTop: 20 }]}>
-                  <View style={styles.logoStyle}>
-                    <Image style={styles.applogo} source={appLogos.appLogo} />
-                  </View>
-                  <CustomText
-                    text="Create New Password"
-                    color={colors.white}
-                    size={size.h4}
-                    font={family.SofiaProBold}
-                  />
-                  <View style={styles.textNormal}>
-                    <CTextfield
-                      secureTextEntry={true}
-                      inputLabel='Enter New Password'
-                      placeholderTextColor={colors.white}
-                      mode={'outlined'}
-                      multiLine={false}
-                      numberOfLines={1}
-                      icon={appIcons?.lock}
-                      iconColor={colors.primary}
-                      outlineColor={colors.white}
-                      bgColor={{ color: colors.white }}
-                      activeOutlineColor={colors.primary}
-                      values={password}
-                      onChangeText={(text) => this.setState({ password: text })}
-                    />
-                    <CTextfield
-                      secureTextEntry={true}
-                      inputLabel='Repeat Password'
-                      placeholderTextColor={colors.white}
-                      mode={'outlined'}
-                      multiLine={false}
-                      numberOfLines={1}
-                      icon={appIcons?.lock}
-                      iconColor={colors.primary}
-                      outlineColor={colors.white}
-                      bgColor={{ color: colors.white }}
-                      activeOutlineColor={colors.primary}
-                      values={confirmPassword}
-                      onChangeText={(text) => this.setState({ confirmPassword: text })}
-                    />
-                    <CustomButton
-                      title="Continue"
-                      onPress={onSubmit}
-                      buttonStyle={styles.SubmitBtn}
-                      textStyle={styles.SubmitTitle}
-                    />
-                  </View>
-                </View>
-             
+
+          <View style={[styles.container, { marginTop: 20 }]}>
+            <View style={styles.logoStyle}>
+              <Image style={styles.applogo} source={appLogos.appLogo} />
+            </View>
+            <CustomText
+              text="Create New Password"
+              color={colors.white}
+              size={size.h4}
+              font={family.SofiaProBold}
+            />
+            <View style={styles.textNormal}>
+            <CTextfield
+                secureTextEntry={true}
+                inputLabel='Enter Old Password'
+                placeholderTextColor={colors.white}
+                mode={'outlined'}
+                multiLine={false}
+                numberOfLines={1}
+                icon={appIcons?.lock}
+                iconColor={colors.primary}
+                outlineColor={colors.white}
+                bgColor={{ color: colors.white }}
+                activeOutlineColor={colors.primary}
+                values={old_password}
+                onChangeText={(text) => this.setState({ old_password: text })}
+              />
+              <CTextfield
+                secureTextEntry={true}
+                inputLabel='Enter New Password'
+                placeholderTextColor={colors.white}
+                mode={'outlined'}
+                multiLine={false}
+                numberOfLines={1}
+                icon={appIcons?.lock}
+                iconColor={colors.primary}
+                outlineColor={colors.white}
+                bgColor={{ color: colors.white }}
+                activeOutlineColor={colors.primary}
+                values={password}
+                onChangeText={(text) => this.setState({ password: text })}
+              />
+              <CTextfield
+                secureTextEntry={true}
+                inputLabel='Repeat Password'
+                placeholderTextColor={colors.white}
+                mode={'outlined'}
+                multiLine={false}
+                numberOfLines={1}
+                icon={appIcons?.lock}
+                iconColor={colors.primary}
+                outlineColor={colors.white}
+                bgColor={{ color: colors.white }}
+                activeOutlineColor={colors.primary}
+                values={confirmPassword}
+                onChangeText={(text) => this.setState({ confirmPassword: text })}
+              />
+              <CustomButton
+                title="Continue"
+                onPress={onSubmit}
+                buttonStyle={styles.SubmitBtn}
+                textStyle={styles.SubmitTitle}
+              />
+            </View>
+          </View>
+
         </View>
       </CustomBackground>
     );

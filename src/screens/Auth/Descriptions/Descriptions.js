@@ -17,10 +17,17 @@ export class Descriptions extends Component {
             bodytype: '',
             haircolor: '',
             eyecolor: '',
+            selected:'',
+            selected2:'',   
+            selected3:'',
+            selected4:'',
+            selected5:'',
+            selected6:'',
+          
         }
     }
     render() {
-        const { bodytype, haircolor, eyecolor, } = this?.state
+        const { bodytype, haircolor, eyecolor,selected,selected2,selected3,selected4,selected5,selected6 } = this?.state
 
         const piercingData = [
             { key: '0', value: 'Gold' },
@@ -50,7 +57,47 @@ export class Descriptions extends Component {
                     type: 'error',
                     visibilityTime: 3000
                 })
-            } else {
+            } else if (!selected){
+                Toast.show({
+                    text1: 'Piercing field can\'t be empty.',
+                    type: 'error',
+                    visibilityTime: 3000
+                })
+            }else if (!selected2){
+                Toast.show({
+                    text1: 'Tattoo field can\'t be empty.',
+                    type: 'error',
+                    visibilityTime: 3000
+                })
+            }else if(!selected3){
+                Toast.show({
+                    text1: "Smoking field can't be empty.",
+                    type: 'error',
+                    visibilityTime: 3000,
+                })
+
+            }else if(!selected4){
+                Toast.show({
+                    text1: "Drinking field can't be empty.",
+                    type: 'error',
+                    visibilityTime: 3000,
+                })
+            }
+            else if (!selected5) {
+                Toast.show({
+                    text1: "Etnicity field can't be empty.",
+                    type: 'error',
+                    visibilityTime: 3000,
+                })
+            }
+            else if (!selected6) {
+                Toast.show({
+                    text1: "Salary bracket field can't be empty.",
+                    type: 'error',
+                    visibilityTime: 3000,
+                })
+            }
+            else {
                NavService.navigate()
 
             }
@@ -133,8 +180,8 @@ export class Descriptions extends Component {
                                 inputStyles={styles.inputStyles}
                             />
                             <SelectList
-                                setSelected={selected =>
-                                    this.setState({ selected: TatoosData[selected]?.value })
+                                setSelected={selected2 =>
+                                    this.setState({ selected2: TatoosData[selected2]?.value })
                                 }
                                 fontFamily={family.SofiaProBold}
                                 data={TatoosData}
@@ -156,8 +203,8 @@ export class Descriptions extends Component {
                                 inputStyles={styles.inputStyles}
                             />
                             <SelectList
-                                setSelected={selected =>
-                                    this.setState({ selected: TatoosData[selected]?.value })
+                                setSelected={selected3 =>
+                                    this.setState({ selected3: TatoosData[selected3]?.value })
                                 }
                                 fontFamily={family.SofiaProBold}
                                 data={TatoosData}
@@ -179,8 +226,8 @@ export class Descriptions extends Component {
                                 inputStyles={styles.inputStyles}
                             />
                             <SelectList
-                                setSelected={selected =>
-                                    this.setState({ selected: TatoosData[selected]?.value })
+                                setSelected={selected4 =>
+                                    this.setState({ selected4: TatoosData[selected4]?.value })
                                 }
                                 fontFamily={family.SofiaProBold}
                                 data={TatoosData}
@@ -202,8 +249,8 @@ export class Descriptions extends Component {
                                 inputStyles={styles.inputStyles}
                             />
                             <SelectList
-                                setSelected={selected =>
-                                    this.setState({ selected: TatoosData[selected]?.value })
+                                setSelected={selected5 =>
+                                    this.setState({ selected5: TatoosData[selected5]?.value })
                                 }
                                 fontFamily={family.SofiaProBold}
                                 data={TatoosData}
@@ -225,8 +272,8 @@ export class Descriptions extends Component {
                                 inputStyles={styles.inputStyles}
                             />
                             <SelectList
-                                setSelected={selected =>
-                                    this.setState({ selected: TatoosData[selected]?.value })
+                                setSelected={selected6 =>
+                                    this.setState({ selected6: TatoosData[selected6]?.value })
                                 }
                                 fontFamily={family.SofiaProBold}
                                 data={TatoosData}

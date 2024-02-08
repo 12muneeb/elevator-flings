@@ -84,14 +84,11 @@ class MainNavigation extends Component {
     return (
       <NavigationContainer ref={ref => NavService.setTopLevelNavigator(ref)}>
         <View style={styles.container}>
-          {/* IF USER PROFILE STORE IS NOT EMPTY */}
           {loggedInUser ? (
             <AppNavigation initialRoute={undefined} />
           ) : (
-            // <AppNavigation initialRoute={undefined} />
             <AuthNavigation initialRoute={undefined} />
           )}
-          {/* IF USER PROFILE STORE IS EMPTY */}
        
         </View>
       </NavigationContainer>

@@ -5,16 +5,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Text,Keyboard,
+  Text, Keyboard,
   Platform,
 } from 'react-native';
-import {colors} from '../utils';
-import {appIcons} from '../assets';
+import { colors } from '../utils';
+import { appIcons } from '../assets';
 import appStyles from '../screens/appStyles';
 import Shadows from '../helpers/Shadows';
-import {togglePropertyAddModal} from '../redux/actions/appAction';
+import { togglePropertyAddModal } from '../redux/actions/appAction';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 class TabBar extends React.Component {
   constructor(props) {
     super(props);
@@ -24,10 +24,10 @@ class TabBar extends React.Component {
   }
   componentDidMount() {
     this.showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      this.setState({keyboardStatus: true});
+      this.setState({ keyboardStatus: true });
     });
     this.hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      this.setState({keyboardStatus: false});
+      this.setState({ keyboardStatus: false });
     });
   }
   componentWillUnmount() {
@@ -35,21 +35,25 @@ class TabBar extends React.Component {
     this.hideSubscription.remove();
   }
   render() {
-    const {state, navigation} = this.props;
-    const {keyboardStatus} = this.state;
+    const { state, navigation } = this.props;
+    const { keyboardStatus } = this.state;
     return (
       <View
         style={[{
           ...Shadows.shadow5,
-          width: width,
+          width: width - 30,
           height: width * 0.17,
           position: 'absolute',
-          bottom: 0,
+          bottom: 20,
           justifyContent: 'center',
-          backgroundColor: colors.white,
+          backgroundColor: colors.gray,
           paddingBottom: 6,
           justifyContent: 'flex-end',
-        },keyboardStatus ? styles.hideTabNavigation : null,]}>
+          alignSelf: 'center',
+          borderRadius: 37,
+          borderWidth: 3,
+          borderColor: colors.lightGray
+        }, keyboardStatus ? styles.hideTabNavigation : null,]}>
         <View
           style={{
             flexDirection: 'row',
@@ -67,7 +71,6 @@ class TabBar extends React.Component {
             let imageSrc = appIcons.homeUnSelected;
             if (route.name === 'Home') imageSrc = appIcons.home;
             if (route.name === 'Profile') imageSrc = appIcons.profile;
-            // if (route.name === 'Hunting') imageSrc = appIcons.hunting;
             if (route.name === 'tabBar4') {
               return <View key={index + 1} style={styles.tabs} />;
             }
@@ -75,7 +78,7 @@ class TabBar extends React.Component {
             return (
               <TouchableOpacity
                 key={index + 1}
-                accessibilityState={isFocused ? {selected: true} : {}}
+                accessibilityState={isFocused ? { selected: true } : {}}
                 accessibilityRole="button"
                 activeOpacity={0.8}
                 onPress={onPress}
@@ -88,6 +91,7 @@ class TabBar extends React.Component {
                       borderRadius: 10,
                       marginBottom: 1.8,
                       backgroundColor: colors.primary,
+                      marginTop: 5
                     }}></View>
                 ) : (
                   <View
@@ -128,32 +132,7 @@ class TabBar extends React.Component {
               </TouchableOpacity>
             );
           })}
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => togglePropertyAddModal(true)}
-            style={{
-              position: 'absolute',
-              bottom: 10,
-              left: 180,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              source={appIcons.add}
-              style={{
-                height: 20,
-                width: 20,
-              }}
-              resizeMode="contain"
-            />
-            <Text
-              style={{
-                color: colors?.primary,
-                marginTop: Platform.OS == 'android' ? 2 : 6,
-              }}>
-              Add
-            </Text>
-          </TouchableOpacity>
+        
         </View>
       </View>
     );

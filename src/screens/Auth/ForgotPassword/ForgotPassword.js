@@ -2,7 +2,7 @@ import * as EmailValidator from 'email-validator';
 import React, { Component, createRef } from 'react';
 import { Image, View } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { connect } from 'react-redux';
+import { connect,useDispatch } from 'react-redux';
 import { appIcons, appLogos } from '../../../assets';
 import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
@@ -23,6 +23,7 @@ class ForgotPassword extends Component {
 
   render() {
     const { email } = this.state;
+   
     onSubmit = () => {
          if(!email){
             Toast.show({
@@ -39,7 +40,10 @@ class ForgotPassword extends Component {
         }
          
          else{
-          NavService.navigate('Otp')
+          // NavService.navigate('Otp')
+          const formdata = new FormData
+          formdata.append('email', email)
+          this.props.forgotPassword(formdata);
          }
     };
     return (
