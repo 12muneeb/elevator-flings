@@ -11,7 +11,8 @@ import Img from '../../../components/Img'
 import NavService from '../../../helpers/NavService'
 import { colors, family } from '../../../utils'
 import { styles } from './styles'
-
+import { completeProfile } from '../../../redux/actions/authAction'
+import { connect } from 'react-redux'
 export class Description extends Component {
   constructor(props) {
     super(props)
@@ -29,6 +30,7 @@ export class Description extends Component {
   }
   render() {
     const { career, weight, networth, height, selected, selected2, selected1, interests, texttags } = this.state
+    const { data } = this.props.route.params
 
     const intentionData = [
       { key: '0', value: 'Action' },
@@ -94,7 +96,21 @@ export class Description extends Component {
           visibilityTime: 3000,
         })
       } else {
-        NavService.navigate('Descriptions');
+        let payload = {
+          ...data,
+          intention: selected,
+          looking_for: selected1,
+          interests: interests,
+          education: selected2,
+          career: career,
+          weight: weight,
+          height: height,
+          networth: networth,
+        }
+        NavService.navigate('Descriptions', {
+          data: payload
+        })
+      
       }
     }
 
@@ -294,4 +310,6 @@ export class Description extends Component {
   }
 }
 
-export default Description
+// export default 
+const actions = { completeProfile };
+export default connect(null, actions)(Description);

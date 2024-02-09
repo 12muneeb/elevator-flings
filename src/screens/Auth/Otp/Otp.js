@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { appLogos } from '../../../assets/index';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
@@ -18,9 +18,9 @@ import { colors, family, size } from '../../../utils';
 import { otpVerify } from '../../../redux/actions/authAction';
 import styles from './styles';
 const Otp = ({ navigation, route }) => {
+  const stateOfRedux = useSelector((state) => state)
+  console.log('stateOfRedux', stateOfRedux);
   const { screenName, id } = route.params;
-
-
   const dispatch = useDispatch();
   let timer;
   const [code, setCode] = useState();

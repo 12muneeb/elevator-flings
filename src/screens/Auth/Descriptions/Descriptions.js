@@ -10,6 +10,8 @@ import Img from '../../../components/Img'
 import NavService from '../../../helpers/NavService'
 import { colors, family } from '../../../utils'
 import { styles } from './styles'
+import { connect } from 'react-redux'
+import { completeProfile } from '../../../redux/actions/authAction'
 export class Descriptions extends Component {
     constructor(props) {
         super(props)
@@ -17,18 +19,18 @@ export class Descriptions extends Component {
             bodytype: '',
             haircolor: '',
             eyecolor: '',
-            selected:'',
-            selected2:'',   
-            selected3:'',
-            selected4:'',
-            selected5:'',
-            selected6:'',
-          
+            selected: '',
+            selected2: '',
+            selected3: '',
+            selected4: '',
+            selected5: '',
+            selected6: '',
+
         }
     }
     render() {
-        const { bodytype, haircolor, eyecolor,selected,selected2,selected3,selected4,selected5,selected6 } = this?.state
-
+        const { bodytype, haircolor, eyecolor, selected, selected2, selected3, selected4, selected5, selected6 } = this?.state
+        const { data } = this.props.route.params
         const piercingData = [
             { key: '0', value: 'Gold' },
             { key: '1', value: 'Ear' },
@@ -57,26 +59,26 @@ export class Descriptions extends Component {
                     type: 'error',
                     visibilityTime: 3000
                 })
-            } else if (!selected){
+            } else if (!selected) {
                 Toast.show({
                     text1: 'Piercing field can\'t be empty.',
                     type: 'error',
                     visibilityTime: 3000
                 })
-            }else if (!selected2){
+            } else if (!selected2) {
                 Toast.show({
                     text1: 'Tattoo field can\'t be empty.',
                     type: 'error',
                     visibilityTime: 3000
                 })
-            }else if(!selected3){
+            } else if (!selected3) {
                 Toast.show({
                     text1: "Smoking field can't be empty.",
                     type: 'error',
                     visibilityTime: 3000,
                 })
 
-            }else if(!selected4){
+            } else if (!selected4) {
                 Toast.show({
                     text1: "Drinking field can't be empty.",
                     type: 'error',
@@ -98,7 +100,26 @@ export class Descriptions extends Component {
                 })
             }
             else {
-               NavService.navigate()
+                let payload = {
+                    ...data,
+                    body_type: bodytype,
+                    hair_color: haircolor,
+                    eye_color: eyecolor,
+                    piercings: selected,
+                    tattos: selected2,
+                    smoking: selected3,
+                    drinking: selected4,
+                    ethnicity: selected5,
+                    salary_bracket: selected6,
+                }
+                // console.log('objectsds', payload)
+                const formdata = new FormData();
+                Object.keys(payload).forEach((item) => {
+                   return formdata.append(item, payload[item])
+                })
+                // console.log('formdaJSSJJSta==', formdata);
+                this.props.completeProfile(formdata)
+                //    NavService.navigate()
 
             }
         }
@@ -310,4 +331,7 @@ export class Descriptions extends Component {
     }
 }
 
-export default Descriptions
+// export default Descriptions
+const actions = { completeProfile };
+export default connect(null, actions)(Descriptions);
+

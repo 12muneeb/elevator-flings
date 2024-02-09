@@ -132,13 +132,14 @@ function* oTPVerify() {
       );
       yield put(loaderStop());
       if (response.status === 1) {
+        yield put(saveTokenForLoginUser(response?.bearer_token));
         if (screen == 'signup') {
           NavService.navigate('CompleteProfile', {
             screen: 'Otp',
           });
           yield put(toggleVerificationPopUp(true));
+
         } else {
-          yield put(saveTokenForLoginUser(response?.bearer_token));
           if (screen == 'forgot') {
             NavService.navigate('ResetPassword', {
               user_id: response.data,
@@ -274,7 +275,7 @@ function* socialSignin() {
         console.log('response.data', response.data, 'response.data');
         if (response?.data?.is_profile_complete == 0) {
           yield put(saveTokenForLoginUser(response?.bearer_token));
-          NavService.navigate('CompleteProfile');
+          NavService.navigate('Descriptions');
         } else if (response?.data?.is_account_verified == 0) {
           yield put(toggleVerificationPopUp(true));
         } else {
@@ -496,7 +497,7 @@ function* userLogout() {
 export default function* root() {
   yield fork(login);
   // yield fork(socialSignin);
-  // yield fork(completeProfile);
+  yield fork(completeProfile);
   // yield fork(updateProfile);
   // yield fork(deleteUserAccount);
   // yield fork(userLogout);

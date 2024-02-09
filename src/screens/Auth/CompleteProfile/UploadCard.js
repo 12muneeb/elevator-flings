@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
 import { appIcons } from '../../../assets';
 import Img from '../../../components/Img';
 import { colors, family, size } from '../../../utils';
@@ -23,38 +22,6 @@ class UploadCard extends Component {
     };
   }
 
-  pickDocument = async () => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-
-      const documentObject = {
-        uri: result.uri,
-        name: result.name || `IMG${this.state.documentCount}`,
-        id: this.state.documentCount,
-      };
-
-      this.setState(prevState => ({
-        galleryDocuments: [...prevState.galleryDocuments, documentObject],
-        documentCount: prevState.documentCount + 1,
-      }));
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        // User cancelled the document picker
-      } else {
-        // Handle other errors
-      }
-    }
-  };
-
-  removeDocument = documentId => {
-    this.setState(prevState => ({
-      galleryDocuments: prevState.galleryDocuments.filter(
-        document => document.id !== documentId,
-      ),
-    }));
-  };
 
   render() {
     const { galleryDocuments } = this.state;

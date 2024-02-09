@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ import appStyles from '../../appStyles';
 import UploadCard from './UploadCard';
 import styles from './styles';
 import Toast from 'react-native-toast-message';
-
+import DocumentPicker from 'react-native-document-picker';
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -28,9 +28,43 @@ class CompleteProfile extends Component {
       name: '',
       Dob: '',
       selected: '',
-      about: ''
+      about: '',
+      galleryDocuments: [],
+      documentCount: 1,
     };
   }
+  pickDocument = async () => {
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+
+      const documentObject = {
+        uri: result.uri,
+        name: result.name || `IMG${this.state.documentCount}`,
+        id: this.state.documentCount,
+      };
+
+      this.setState(prevState => ({
+        galleryDocuments: [...prevState.galleryDocuments, documentObject],
+        documentCount: prevState.documentCount + 1,
+      }));
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the document picker
+      } else {
+        // Handle other errors
+      }
+    }
+  };
+
+  removeDocument = documentId => {
+    this.setState(prevState => ({
+      galleryDocuments: prevState.galleryDocuments.filter(
+        document => document.id !== documentId,
+      ),
+    }));
+  };
 
   showDatePicker = () => {
     this.setState({ isDatePickerVisible: true });
@@ -47,7 +81,7 @@ class CompleteProfile extends Component {
   };
 
   render() {
-    const { fullName, bussinessProfileImage, Dob, about, selected } = this.state;
+    const { fullName, bussinessProfileImage, Dob, about, selected, galleryDocuments } = this.state;
     const data = [
       { key: '0', value: 'Male' },
       { key: '1', value: 'Female' },
@@ -80,7 +114,27 @@ class CompleteProfile extends Component {
         })
       }
       else {
-        Alert.alert('success')
+        // const formdata = new FormData
+        // formdata.append('full_name', fullName)
+        // formdata.append('gender', selected)
+        // formdata.append('date_of_birth', Dob)
+        // formdata.append('about', about)
+        // NavService.navigate('',{
+
+        // })
+        let payload = {
+          full_name: fullName,
+          gender: selected,
+          date_of_birth: Dob,
+          about: about,
+
+        }
+        console.log('objectddd', payload)
+        NavService.navigate('Description', {
+          data: payload
+        })
+
+
       }
     };
 
@@ -130,7 +184,59 @@ class CompleteProfile extends Component {
               </View>
             </ImagePicker>
             <View style={{ marginTop: '10%', gap: 15 }}>
-              <UploadCard />
+
+              <View>
+                <TouchableOpacity style={styles.imageBtn} onPress={this.pickDocument}>
+                  <ImageBackground style={styles.propertyImage} resizeMode="cover">
+                    <Img
+                      local={true}
+                      src={appIcons.upload}
+                      style={styles.up}
+                      tintColor={colors.primary}
+                    />
+                    <Text
+                      style={[
+                        styles.carettext,
+                        { color: colors.red, textAlign: 'center' },
+                      ]}>
+                      Maximum 10, minimum 3, 1 full {'\n'}
+                      body picture suggested
+                    </Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+              </View>
+
+              {galleryDocuments?.length > 0 ? (
+                <View style={{ height: 60, backgroundColor: 'red', width: '90%' }}>
+                  <ScrollView
+                    style={styles.mainCont}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    {galleryDocuments?.map((document, index) => {
+                      return (
+                        <View key={index + 1}>
+                          <TouchableOpacity activeOpacity={0.9} >
+                            <View style={styles.documentContainer}>
+                              <Text style={styles.documentText}>{document.name}</Text>
+                              <TouchableOpacity
+                                style={styles.closeIconCont}
+                                onPress={() => this.removeDocument(document.id)}>
+                                <Img
+                                  local
+                                  src={appIcons.close}
+                                  resizeMode={'contain'}
+                                  style={{ width: 8, height: 8 }}
+                                  tintColor={colors.white}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              ) : null}
               <CTextfield
                 secureTextEntry={false}
                 inputLabel="Name"
@@ -153,7 +259,7 @@ class CompleteProfile extends Component {
                   borderRadius: 10,
                 }}
                 maxLength={30}
-                placeholder={'Exp Date'}
+                placeholder={'Dob'}
                 value={Dob}
                 placeholderColor={colors.lightGray}
                 borderColor={colors.primary}
@@ -202,6 +308,7 @@ class CompleteProfile extends Component {
                   width: '90%',
                 }}
               />
+
               <DateTimePickerModal
                 isVisible={this.state.isDatePickerVisible}
                 mode="date"

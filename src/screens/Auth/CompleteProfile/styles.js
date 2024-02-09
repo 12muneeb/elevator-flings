@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, family, size} from '../../../utils';
+import { StyleSheet } from 'react-native';
+import { colors, family, size } from '../../../utils';
 import appStyles from '../../appStyles';
 
 const styles = StyleSheet.create({
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: size.small,
     fontFamily: family.SofiaProBold,
   },
-  inputlabel: {color: colors.lightGray, fontSize: size.normal},
+  inputlabel: { color: colors.lightGray, fontSize: size.normal },
   propertyImage: {
     width: '100%',
     height: '100%',
@@ -113,21 +113,66 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+
+
+  mainCont: {
+    width: '90%',
+  },
+  documentContainer: {
+    width: 85,
+    height: 45,
+    borderRadius: 30,
+    backgroundColor: colors.gray,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 5,
+    paddingHorizontal: 8,
+    borderWidth: 0.5,
+    borderColor: colors.lightGray,
+  },
+  documentText: {
+    fontSize: 16,
+  },
+  closeIconCont: {
+    borderRadius: 50,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeIcon: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: size.xxsmall,
+  },
   imageBtn: {
     width: 350,
     height: 130,
-    borderColor: colors.red,
-    borderStyle: 'dashed',
-    borderWidth: 1.5,
-    borderRadius: 20,
-    backgroundColor: colors.lightYellow,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: colors.gray,
+    overflow: 'hidden',
     marginTop: 18,
+  },
+  propertyImage: {
+    width: '90%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   up: {
     width: 24,
     height: 24,
     resizeMode: 'contain',
     tintColor: colors.red,
+  },
+  carettext: {
+    fontSize: size.medium,
+    fontFamily: family.SofiaProMedium,
+    marginTop: 5,
   },
 });
 

@@ -4,7 +4,7 @@ import {
   CURRENTLOGINUSERINFO,
   USERLOGINDATA,
   USERLOGINTOKEN,
-  USERLOGOUT,VERIFY_POPUP
+  USERLOGOUT, VERIFY_POPUP
 } from '../../constants';
 
 const INITIAL_STATE = {
@@ -12,10 +12,11 @@ const INITIAL_STATE = {
   user: null,
   userToken: null,
   currentUserProfile: {},
-  verificationPopUp:false
+  verificationPopUp: false
 };
 
 export default (states = INITIAL_STATE, action) => {
+  console.log("---Satte", states);
   switch (action.type) {
     case CURRENTUSERPROFILE:
       return {
@@ -43,13 +44,13 @@ export default (states = INITIAL_STATE, action) => {
         ...states,
         userToken: action.payload,
       };
-      case VERIFY_POPUP:
-        return {
-          ...states,
-          verificationPopUp: action.payload,
-        };
+    case VERIFY_POPUP:
+      return {
+        ...states,
+        verificationPopUp: action.payload,
+      };
     case USERLOGOUT:
-      
+
       return {
         ...states,
         user: null,
