@@ -1,13 +1,16 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { responsiveFontSize, responsiveScreenHeight } from 'react-native-responsive-dimensions';
 import { appIcons } from '../assets';
 import { colors, size } from '../utils';
 import CustomText from './CustomText';
 
-const CTextfield = props => {
+const CTextfield = (props) => {
   const [color, setColor] = React.useState(colors.white);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
   const {
     inputContainerStyle,
     inputLabel,
@@ -25,11 +28,15 @@ const CTextfield = props => {
     iconColor,
     outlineColor,
     bgColor,
-    toggleSecure,
     keyboardType,
     activeOutlineColor,
-    onChangeText
+    onChangeText,
+    labelStyle,
   } = props;
+
+  const toggleSecure = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   const renderErrorView = () => {
     return <CustomText text={error} color={colors.red} size={size.small} />;
@@ -41,6 +48,10 @@ const CTextfield = props => {
         <TextInput
           value={value}
           label={inputLabel}
+          labelStyle={[
+            labelStyle,
+            isFocused && { color: colors.white }, // Change label text color when focused
+          ]}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           mode={mode}
@@ -48,7 +59,6 @@ const CTextfield = props => {
           numberOfLines={numberOfLines}
           keyboardType={keyboardType}
           onChangeText={onChangeText}
-          
           left={
             icon && (
               <TextInput.Icon
@@ -61,23 +71,28 @@ const CTextfield = props => {
           }
           theme={{
             colors: {
-              onSurfaceVariant: bgColor ? bgColor : colors.white,
-              placeholder: '#fff',
+              primary: isFocused ? colors.white : colors.lightpurple,
+              text: isFocused ? colors.white : placeholderTextColor,
+              placeholder: placeholderTextColor,
             },
           }}
           activeOutlineColor={activeOutlineColor}
           outlineColor={outlineColor}
           outlineStyle={{ borderRadius: 10 }}
-          style={[styles.inputField,bgColor ]}
+          style={[styles.inputField, bgColor]}
           textColor={colors?.white}
-          secureTextEntry={secureTextEntry}
+          secureTextEntry={secureTextEntry && !isPasswordVisible}
           onFocus={() => {
             setColor(colors.yellow);
+            setIsFocused(true);
+          }}
+          onBlur={() => {
+            setIsFocused(false);
           }}
           right={
             secureTextEntry && (
               <TextInput.Icon
-                icon={secureTextEntry ? appIcons.eye : appIcons.eyeNot}
+                icon={isPasswordVisible ? appIcons.eye : appIcons.eyeNot}
                 onPress={toggleSecure}
                 size={responsiveFontSize(2.6)}
                 style={styles.rightIcon}
@@ -90,13 +105,7 @@ const CTextfield = props => {
     );
   };
 
-
-
-  return (
-    <View style={{ ...inputContainerStyle }}>
-      {type === 'view' ? renderSelectionView() : renderInputView()}
-    </View>
-  );
+  return <View style={{ ...inputContainerStyle }}>{type === 'view' ? renderSelectionView() : renderInputView()}</View>;
 };
 
 export default CTextfield;
@@ -116,6 +125,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     height: responsiveScreenHeight(6),
     color: colors.white,
-    backgroundColor:colors.lightpurple
+    backgroundColor: colors.lightpurple,
   },
 });

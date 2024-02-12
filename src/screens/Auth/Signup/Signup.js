@@ -115,7 +115,6 @@ class Signup extends Component {
                     <View>
 
                       <CTextfield
-                        secureTextEntry={false}
                         inputLabel='Email'
                         placeholder='email@example.com'
                         placeholderTextColor={colors.white}
@@ -127,7 +126,6 @@ class Signup extends Component {
                         outlineColor={colors.white}
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
-                        toggleSecure
                         values={email}
                         onChangeText={(text) => this.setState({ email: text })}
                         keyboardType={'email-address'}
@@ -144,7 +142,6 @@ class Signup extends Component {
                         outlineColor={colors.white}
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
-                        toggleSecure
                         values={password}
                         onChangeText={(text) => this.setState({ password: text })}
                       />
@@ -160,7 +157,7 @@ class Signup extends Component {
                         outlineColor={colors.white}
                         bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
-                        toggleSecure
+                        
                         values={confirmPassword}
                         onChangeText={(text) => this.setState({ confirmPassword: text })}
 

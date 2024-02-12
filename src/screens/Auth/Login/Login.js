@@ -112,6 +112,7 @@ class Login extends Component {
                 iconColor={colors.primary}
                 outlineColor={colors.white}
                 bgColor={{ color: colors.white }}
+                labelStyle={{color:colors.white}}
                 activeOutlineColor={colors.primary}
                 keyboardType={'email-address'}
                 values={email}
