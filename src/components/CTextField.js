@@ -5,9 +5,10 @@ import { responsiveFontSize, responsiveScreenHeight } from 'react-native-respons
 import { appIcons } from '../assets';
 import { colors, size } from '../utils';
 import CustomText from './CustomText';
+import appStyles from '../screens/appStyles';
 
 const CTextfield = (props) => {
-  const [color, setColor] = React.useState(colors.white);
+  const [color, setColor] = React.useState('');
   const [isFocused, setIsFocused] = React.useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
@@ -50,13 +51,14 @@ const CTextfield = (props) => {
           label={inputLabel}
           labelStyle={[
             labelStyle,
-            isFocused && { color: colors.white }, // Change label text color when focused
+            isFocused && { color: colors.white },
           ]}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           mode={mode}
           multiline={multiLine}
           numberOfLines={numberOfLines}
+
           keyboardType={keyboardType}
           onChangeText={onChangeText}
           left={
@@ -79,7 +81,7 @@ const CTextfield = (props) => {
           activeOutlineColor={activeOutlineColor}
           outlineColor={outlineColor}
           outlineStyle={{ borderRadius: 10 }}
-          style={[styles.inputField, bgColor]}
+          style={styles.inputField}
           textColor={colors?.white}
           secureTextEntry={secureTextEntry && !isPasswordVisible}
           onFocus={() => {
@@ -126,5 +128,8 @@ const styles = StyleSheet.create({
     height: responsiveScreenHeight(6),
     color: colors.white,
     backgroundColor: colors.lightpurple,
+    color: colors.white,
+    ...appStyles.font16,
+    ...appStyles.family_SofiaPro_Regular,
   },
 });

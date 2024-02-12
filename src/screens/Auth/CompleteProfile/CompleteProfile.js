@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Alert, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
 import { appIcons } from '../../../assets/index';
-import CTextfield from '../../../components/CTextField';
 import CustomBackground from '../../../components/CustomBackground';
 import CustomButton from '../../../components/CustomButton';
 import CustomTextInput from '../../../components/CustomTextInput';
@@ -15,10 +16,7 @@ import NavService from '../../../helpers/NavService';
 import { completeProfile } from '../../../redux/actions/authAction';
 import { colors, family } from '../../../utils';
 import appStyles from '../../appStyles';
-import UploadCard from './UploadCard';
 import styles from './styles';
-import Toast from 'react-native-toast-message';
-import DocumentPicker from 'react-native-document-picker';
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -237,20 +235,13 @@ class CompleteProfile extends Component {
                   </ScrollView>
                 </View>
               ) : null}
-              <CTextfield
-                secureTextEntry={false}
-                inputLabel="Name"
-                placeholderTextColor={colors.gray}
-                mode={'outlined'}
-                multiLine={false}
-                numberOfLines={1}
-                iconColor={colors.primary}
-                outlineColor={colors.gray}
-                bgColor={{ backgroundColor: colors.gray }}
-                activeOutlineColor={colors.primary}
-                toggleSecure
-                values={fullName}
-                onChangeText={text => this.setState({ fullName: text })}
+              <CustomTextInput
+                placeholder={'Name'}
+                value={fullName}
+                keyboardType={'default'}
+                placeholderColor={colors.lightGray}
+                inputStyle={{ color: colors.lightGray }}
+                onChangeText={value => this.setState({ fullName: value })}
               />
               <CustomTextInput
                 showSoftInputOnFocus={false}
@@ -298,7 +289,6 @@ class CompleteProfile extends Component {
                 placeholder={'About yourself'}
                 placeholderTextColor={colors.lightGray}
                 value={about}
-                color={'black'}
                 isBorderShow
                 keyboardType={'default'}
                 onChangeText={value => this.setState({ about: value })}

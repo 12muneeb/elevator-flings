@@ -71,7 +71,6 @@ export default function CustomTextInput(props) {
             height:55
 
           },
-          // !isFocused ? { ...Shadows.shadow3 } : null,
           containerStyle,
         ]}>
         {!hideLeftIcon && (
@@ -136,12 +135,14 @@ export default function CustomTextInput(props) {
           <TextInput
             onFocus={handleFocus}
             onBlur={handleBlur}
+            returnKeyType="done"
+            blurOnSubmit={true}
             placeholderTextColor={props?.placeholderColor || colors.black}
             style={[
               {
                 flex: 1,
-                color: colors.black,
-                ...appStyles.font13,
+                color: colors.white,
+                ...appStyles.font16,
                 ...appStyles.family_SofiaPro_Regular,
               },
             ]}

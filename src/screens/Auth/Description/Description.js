@@ -242,7 +242,6 @@ export class Description extends Component {
               numberOfLines={1}
               iconColor={colors.primary}
               outlineColor={colors.gray}
-              bgColor={{ backgroundColor: colors.gray }}
               activeOutlineColor={colors.primary}
               toggleSecure
               values={career}
@@ -258,7 +257,6 @@ export class Description extends Component {
               numberOfLines={1}
               iconColor={colors.primary}
               outlineColor={colors.gray}
-              bgColor={{ backgroundColor: colors.gray }}
               activeOutlineColor={colors.primary}
               toggleSecure
               values={weight}
@@ -274,7 +272,6 @@ export class Description extends Component {
               numberOfLines={1}
               iconColor={colors.primary}
               outlineColor={colors.gray}
-              bgColor={{ backgroundColor: colors.gray }}
               activeOutlineColor={colors.primary}
               toggleSecure
               values={height}
@@ -290,7 +287,6 @@ export class Description extends Component {
               numberOfLines={1}
               iconColor={colors.primary}
               outlineColor={colors.gray}
-              bgColor={{ backgroundColor: colors.gray }}
               activeOutlineColor={colors.primary}
               toggleSecure
               values={networth}

@@ -83,7 +83,6 @@ class ForgotPassword extends Component {
                       icon={appIcons?.email}
                       iconColor={colors.primary}
                       outlineColor={colors.white}
-                      bgColor={{ color: colors.white }}
                       activeOutlineColor={colors.primary}
                       values={email}
                       keyboardType={'email-address'}

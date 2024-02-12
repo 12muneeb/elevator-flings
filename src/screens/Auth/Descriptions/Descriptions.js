@@ -137,7 +137,6 @@ export class Descriptions extends Component {
                             numberOfLines={1}
                             iconColor={colors.primary}
                             outlineColor={colors.gray}
-                            bgColor={{ backgroundColor: colors.gray }}
                             activeOutlineColor={colors.primary}
                             toggleSecure
                             values={bodytype}
@@ -153,7 +152,6 @@ export class Descriptions extends Component {
                             numberOfLines={1}
                             iconColor={colors.primary}
                             outlineColor={colors.gray}
-                            bgColor={{ backgroundColor: colors.gray }}
                             activeOutlineColor={colors.primary}
                             toggleSecure
                             values={haircolor}
@@ -169,7 +167,6 @@ export class Descriptions extends Component {
                             numberOfLines={1}
                             iconColor={colors.primary}
                             outlineColor={colors.gray}
-                            bgColor={{ backgroundColor: colors.gray }}
                             activeOutlineColor={colors.primary}
                             toggleSecure
                             values={eyecolor}

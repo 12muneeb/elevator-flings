@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Platform,
   TouchableOpacity,
@@ -22,45 +23,29 @@ class PreLogin extends Component {
     terms: false,
     policy: false,
     navigator: '',
-    verificationPopUp:false
+    verificationPopUp: false
   };
 
 
 
 
   render() {
-    const { agreementModal, terms, policy, navigator ,verificationPopUp} = this.state;
-    const proceedSocialLogin = async socialType => {
-      const fcmToken = await getDeviceToken();
-      await Promise.all(fcmToken);
-      if (socialType == 'google') {
+    const { agreementModal, terms, policy, navigator, verificationPopUp } = this.state;
+    const proceedSocialLogin = async () => {
+      await Promise.all();
+        Alert.alert('jj')
         const userDetails = await SocialSignin?.Google();
         console.log('userDetails', userDetails);
-        if (userDetails) {
-          let payload = {
-            social_token: userDetails?.uid,
-            social_type: userDetails?.socialType,
-            device_type: Platform.OS,
-            device_token: fcmToken,
-            user_type: 'business',
-          };
-          console.log(payload, 'payloadpayload');
-          this.props.socialSignin(payload);
-        }
-      } else if (socialType == 'apple') {
-        const userDetails = await SocialSignin.Apple();
-        if (userDetails) {
-          let payload = {
-            social_token: userDetails?.uid,
-            social_type: userDetails?.socialType,
-            device_type: Platform.OS,
-            device_token: fcmToken,
-            user_type: 'business',
-          };
-          console.log(payload, 'payloadpayload');
-          this.props.socialSignin(payload);
-        }
-      }
+        let payload = {
+          social_token: userDetails?.uid,
+          social_type: 'google',
+          device_type: Platform.OS,
+          device_token: '12345',
+          user_type: 'user',
+        };
+        console.log(payload, 'payloadpayload');
+        this.props.socialSignin(payload);
+
     };
     const methods = [
       {
@@ -73,7 +58,7 @@ class PreLogin extends Component {
         name: 'Google',
         icon: appIcons.googlePlus,
         color: colors.google,
-        onPress: () => proceedSocialLogin('google'),
+        onPress: () => proceedSocialLogin(),
         // onPress: SocialSignin.Google,
       },
       {
@@ -112,12 +97,12 @@ class PreLogin extends Component {
             })}
           </View>
         </View>
-   
+
       </CustomBackground>
     );
   }
 }
 
 
-const actions = {socialSignin};
+const actions = { socialSignin };
 export default connect(null, actions)(PreLogin);

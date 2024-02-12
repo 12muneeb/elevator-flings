@@ -1,6 +1,6 @@
 import * as EmailValidator from 'email-validator';
 import React, { Component, createRef } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { connect } from 'react-redux';
 import { appIcons, appImages, appLogos } from '../../../assets/index';
@@ -10,7 +10,8 @@ import CustomButton from '../../../components/CustomButton';
 import CustomText from '../../../components/CustomText';
 import Img from '../../../components/Img';
 import NavService from '../../../helpers/NavService';
-import { signUpUser } from '../../../redux/actions/authAction';
+import { signUpUser,socialSignin } from '../../../redux/actions/authAction';
+import SocialSignin from '../../../components/SocialSignin';
 import { colors, family, size } from '../../../utils';
 import styles from './styles';
 
@@ -74,7 +75,23 @@ class Signup extends Component {
     const OnCreate = () => {
       NavService.navigate('Login');
     }
-  
+    const proceedSocialLogin = async socialType => {
+      const fcmToken = await getDeviceToken();
+      await Promise.all(fcmToken);
+        const userDetails = await SocialSignin?.Google();
+        console.log('userDetails', userDetails);
+        if (userDetails) {
+          let payload = {
+            social_token: userDetails?.uid,
+            social_type: userDetails?.socialType,
+            device_type: Platform.OS,
+            device_token: '12345',
+            user_type: 'user',
+          };
+          console.log(payload, 'payloadpayload');
+          this.props.socialSignin(payload);
+        }
+    };
     return (
       <CustomBackground
         showLogo={false}
@@ -124,7 +141,6 @@ class Signup extends Component {
                         icon={appIcons?.email}
                         iconColor={colors.primary}
                         outlineColor={colors.white}
-                        bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         values={email}
                         onChangeText={(text) => this.setState({ email: text })}
@@ -140,7 +156,6 @@ class Signup extends Component {
                         icon={appIcons?.lock}
                         iconColor={colors.primary}
                         outlineColor={colors.white}
-                        bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         values={password}
                         onChangeText={(text) => this.setState({ password: text })}
@@ -155,7 +170,6 @@ class Signup extends Component {
                         icon={appIcons?.lock}
                         iconColor={colors.primary}
                         outlineColor={colors.white}
-                        bgColor={{ color: colors.white }}
                         activeOutlineColor={colors.primary}
                         
                         values={confirmPassword}
@@ -180,7 +194,7 @@ class Signup extends Component {
                         <TouchableOpacity style={styles.imgtouchable} activeOpacity={0.8}>
                           <Img local src={appImages.facebook} resizeMode={'contain'} style={styles.img} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.imgtouchable} activeOpacity={0.8}>
+                        <TouchableOpacity style={styles.imgtouchable} activeOpacity={0.8} onPress={proceedSocialLogin}>
                           <Img local src={appImages.google} resizeMode={'contain'} style={styles.img} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.imgtouchable} activeOpacity={0.8}>

@@ -111,7 +111,6 @@ class Login extends Component {
                 icon={appIcons?.email}
                 iconColor={colors.primary}
                 outlineColor={colors.white}
-                bgColor={{ color: colors.white }}
                 labelStyle={{color:colors.white}}
                 activeOutlineColor={colors.primary}
                 keyboardType={'email-address'}
@@ -128,7 +127,6 @@ class Login extends Component {
                 icon={appIcons?.lock}
                 iconColor={colors.primary}
                 outlineColor={colors.white}
-                bgColor={{ color: colors.white }}
                 activeOutlineColor={colors.primary}
                 values={password}
                 onChangeText={(text) => this.setState({ password: text })}

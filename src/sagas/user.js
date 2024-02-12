@@ -275,7 +275,7 @@ function* socialSignin() {
         console.log('response.data', response.data, 'response.data');
         if (response?.data?.is_profile_complete == 0) {
           yield put(saveTokenForLoginUser(response?.bearer_token));
-          NavService.navigate('Descriptions');
+          NavService.navigate('Description');
         } else if (response?.data?.is_account_verified == 0) {
           yield put(toggleVerificationPopUp(true));
         } else {
@@ -496,7 +496,7 @@ function* userLogout() {
 
 export default function* root() {
   yield fork(login);
-  // yield fork(socialSignin);
+  yield fork(socialSignin);
   yield fork(completeProfile);
   // yield fork(updateProfile);
   // yield fork(deleteUserAccount);

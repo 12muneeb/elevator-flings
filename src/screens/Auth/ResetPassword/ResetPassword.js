@@ -108,7 +108,6 @@ class ResetPassword extends Component {
                 icon={appIcons?.lock}
                 iconColor={colors.primary}
                 outlineColor={colors.white}
-                bgColor={{ color: colors.white }}
                 activeOutlineColor={colors.primary}
                 values={old_password}
                 onChangeText={(text) => this.setState({ old_password: text })}
@@ -123,7 +122,6 @@ class ResetPassword extends Component {
                 icon={appIcons?.lock}
                 iconColor={colors.primary}
                 outlineColor={colors.white}
-                bgColor={{ color: colors.white }}
                 activeOutlineColor={colors.primary}
                 values={password}
                 onChangeText={(text) => this.setState({ password: text })}
@@ -138,7 +136,6 @@ class ResetPassword extends Component {
                 icon={appIcons?.lock}
                 iconColor={colors.primary}
                 outlineColor={colors.white}
-                bgColor={{ color: colors.white }}
                 activeOutlineColor={colors.primary}
                 values={confirmPassword}
                 onChangeText={(text) => this.setState({ confirmPassword: text })}
